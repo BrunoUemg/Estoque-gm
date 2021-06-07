@@ -1,84 +1,73 @@
-<?php 
-include_once("Head.php")
+<?php
+include_once("Head.php");
 
 ?>
 
-
 <?php 
 include_once "../dao/conexao.php";
-$result_consultaFuncionario="SELECT U.idUsuario,
-U.nomeUsuario,
-U.userAcesso,
-L.nomeLocal,
-U.idLocal 
-from usuario U, local L
-where U.idLocal = L.idLocal";
-$resultado_consultaFuncionario = mysqli_query($con, $result_consultaFuncionario);
+$result_consultaRequisicao = "SELECT * FROM requisicao where status = 0 ";
+$resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
 ?>
  <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
  <div class="card shadow mb-4">
  
             <div class="card-header py-3">
-            <center>  <h3 class="m-0 font-weight-bold text-primary">Consultar Funcionário</h3><center>
+            <center>  <h3 class="m-0 font-weight-bold text-primary">Saídas Pendentes</h3><center>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>Nome</th>
-                      <th>Usuário</th>
-                      <th>Local de serviço</th>
+                     
+                      <th>Código</th>
+                      <th>Justificativa</th>
+                      <th>Data</th>
+                      <th>Solicitante</th>  
                       <th>Ações</th>
-                   
                     </tr>
                   </thead>
                 
                   <tbody>
-                  <?php while($rows_consultaFuncionario = mysqli_fetch_assoc($resultado_consultaFuncionario)){ 
+                  <?php while($rows_consultaRequisicao = mysqli_fetch_assoc($resultado_consultaRequisicao)){ 
         ?>
                     <tr>
-                    <td><?php echo $rows_consultaFuncionario['nomeUsuario']; ?></td>
-                    <td><?php echo $rows_consultaFuncionario['userAcesso']; ?></td>
-                    <td><?php echo $rows_consultaFuncionario['nomeLocal']; ?></td>
-
-	
+                    <td><?php echo $rows_consultaRequisicao['codigo']; ?></td>
+                    <td><?php echo $rows_consultaRequisicao['justificativa']; ?></td>
+                    <td><?php $dataBanco = $rows_consultaRequisicao['data'];
+                              $dataBr = date("d/m/Y", strtotime($dataBanco));
+                            echo $dataBr;?></td>
+                    <td><?php echo $rows_consultaRequisicao['solicitante']; ?></td>
 <td>
-     
-    <?php  echo "<a class='btn btn-danger' href='ExcluirFuncionario.php?idUsuario=" .$rows_consultaFuncionario['idUsuario']. "'onclick=\"return confirm('Tem certeza que deseja deletar esse funcionário?');\"> Excluir</a>";  ?>
-    <?php  echo "<a class='btn btn-secondary' href='Historico.php?idUsuario=" .$rows_consultaFuncionario['idUsuario']. "'> Histórico</a>";  ?>
-    <?php echo "<a class='btn btn-primary' href='ConsultarFuncionario.php?idUsuario=".$rows_consultaFuncionario['idUsuario'] ."' data-toggle='modal' data-target='#FuncionarioModal".$rows_consultaFuncionario['idUsuario']."'>" ?>Alterar<?php echo "</a>"; ?>
-   <!-- Modal-->
-   <div class="modal fade" id="FuncionarioModal<?php echo $rows_consultaFuncionario['idUsuario']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<?php echo "<a class='btn btn-primary' title='Finalizar' href='SaidasPendentes.php?idRequisicao=".$rows_consultaRequisicao['idRequisicao'] ."' data-toggle='modal' data-target='#finalizar".$rows_consultaRequisicao['idRequisicao']."'>" ?>Finalizar<?php echo "</a>"; ?>
+     <?php  echo "<a class='btn btn-success'  href='DadosRequisicao.php?idRequisicao=" .$rows_consultaRequisicao['idRequisicao'] .  "'>Editar</a>";  ?>
+    <?php  echo "<a class='btn btn-danger' href='ExcluirRequisicao.php?idRequisicao=" .$rows_consultaRequisicao['idRequisicao']. "'onclick=\"return confirm('Tem certeza que deseja deletar essa requisição?');\"> Excluir</a>";  ?>
+	</td>
+    
+    <div class="modal fade" id="finalizar<?php echo $rows_consultaRequisicao['idRequisicao']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Alterar Funcionário</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Finalizar requisição</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">
-        <form action="AlterarFuncionario.php" method="POST">
+        <form action="FinalizarRequisicao.php" method="POST">
 
-        <input type="text" hidden name="idUsuario"  class="form-control" value="<?php echo $rows_consultaFuncionario['idUsuario'];?>">
-        <input type="text" hidden name="senha"  class="form-control" value="<?php echo $rows_consultaFuncionario['senha'];?>">
-        <input type="text" hidden name="idLocal"  class="form-control" value="<?php echo $rows_consultaFuncionario['idLocal'];?>">
-
-        <label>Nome Usuario</label>
-        <input type="text" class="form-control" name="nomeUsuario" value="<?php echo $rows_consultaFuncionario['nomeUsuario']; ?>">
-
-        <label>Usuário</label>
-        <input type="text" class="form-control" name="user"  value="<?php echo $rows_consultaFuncionario['userAcesso']; ?>">
-
-
-
-
-      
+        <input type="text" hidden name="idRequisicao"  class="form-control" value="<?php echo $rows_consultaRequisicao['idRequisicao'];?>">
+                   
+        <label>Justificativa</label>
+       <input type="text" readOnly name="Justificativa" class="form-control" id="" value="<?php echo $rows_consultaRequisicao['justificativa'] ?>">
+       <label for="">Solicitante</label>
+       <input type="text" readOnly name="quantidade" class="form-control" id="" value="<?php echo $rows_consultaRequisicao['solicitante'] ?>">
+       <label for="">Senha Validação</label>
+       <input type="password" class="form-control" required="required" name="senha_validacao" id="">
         </div>
         <div class="modal-footer">
           <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
-          <input type="submit" name="enviar" class="btn btn-success" value="Salvar" >
+          <input type="submit" class="btn btn-primary" value="Adicionar">
           </form>
 
         </div>
@@ -86,9 +75,6 @@ $resultado_consultaFuncionario = mysqli_query($con, $result_consultaFuncionario)
     </div>
   </div>
 </td>
-    
-    </td>
-   
 	
     </tr>
                   <?php }?>
@@ -102,9 +88,8 @@ $resultado_consultaFuncionario = mysqli_query($con, $result_consultaFuncionario)
 </div>
       </div>        
 
-
-
-<footer class="sticky-footer bg-white">
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
             <span>Copyright &copy; NUPSI 2019</span>
@@ -175,3 +160,5 @@ $resultado_consultaFuncionario = mysqli_query($con, $result_consultaFuncionario)
 </body>
 
 </html>
+
+

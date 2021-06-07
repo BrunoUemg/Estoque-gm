@@ -210,6 +210,7 @@ while($rows_consultaProduto = mysqli_fetch_assoc($resultado_consultaProduto)){
 <?php  echo "<a class='btn btn-primary' title='Editar Produto' href='DadosProduto.php?idProduto=".$rows_consultaProduto['idProduto'] .  "'>" ?><i class='fas fa-edit'></i><?php echo "</a>";?>
 <?php  echo "<a  class='btn btn-danger' title='Excluir Produto' href='ExcluirProduto.php?idProduto=" .$rows_consultaProduto['idProduto']. "' onclick=\"return confirm('Tem certeza que deseja deletar esse registro?');\">"?> <i class='fas fa-trash-alt'></i><?php echo "</a>";  ?>
 <?php echo "<a class='btn btn-warning' title='Adicionar Produto no Carrinho' href='ConsultarProduto.php?idProduto=".$rows_consultaProduto['idProduto'] ."' data-toggle='modal' data-target='#carrinhoModal".$rows_consultaProduto['idProduto']."'>" ?><i class='fas fa-cart-arrow-down'></i><?php echo "</a>"; ?>
+<?php  echo "<a class='btn btn-secondary' title='Informação do produto' href='RelacaoProduto.php?idProduto=".$rows_consultaProduto['idProduto'] .  "'>" ?><i class="fas fa-chart-bar"></i><?php echo "</a>"; ?>  
    <!-- Modal-->
    <div class="modal fade" id="carrinhoModal<?php echo $rows_consultaProduto['idProduto']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

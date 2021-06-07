@@ -4,7 +4,7 @@ include_once "conexao.php";
 session_start();
 $usuario = $_POST['user'];
 $senha = $_POST['senha'];
-
+$data = date("Y-m-d");
 
 
 $sql = "SELECT * FROM usuario WHERE userAcesso = '$usuario'  ";
@@ -26,7 +26,10 @@ $id = $linha['idUsuario'];
         $_SESSION['nomeUsuario'] = $nome;
         $_SESSION['idLocal'] = $idLocal;
 		$_SESSION['userAcesso'] = $user;
-	header('location: ../estoque/MenuPrincipal.php');
+
+        $con->query("INSERT INTO historico (dataHistorico,descricaoHistorico,idUsuario)VALUES('$data','Entrou no sistema', '$id')");
+	
+        header('location: ../estoque/MenuPrincipal.php');
     }
 else 
 {

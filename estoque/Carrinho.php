@@ -115,7 +115,7 @@ foreach($_SESSION['carrinho'] as $lista) {
  
 				</tbody>
 			</table>
-    <?php if(!isset($_SESSION['carrinho']) ){
+    <?php if(empty($_SESSION['carrinho']) ){
         echo "<center> Vazio !! </center>"; }else{?>
 
 			<a class="btn btn-info" href="ConsultarProduto.php">Adicionar mais itens</a>
@@ -142,7 +142,7 @@ foreach($_SESSION['carrinho'] as $lista) {
           </button>
         </div>
         <div class="modal-body">
-        <form action="SaidaProduto.php" method="POST">
+        <form action="SaidaProduto.php" method="POST" enctype="multipart/form-data">
 
         <label>Justificativa</label>
 		<textarea class="form-control"  id="exampleFormControlTextarea1" required="required" rows="2" name="justificativa"></textarea>
@@ -156,6 +156,8 @@ foreach($_SESSION['carrinho'] as $lista) {
 	  <input type="date" class="form-control" name="data" value="<?php echo $data ?>">
 
     <input type="text" hidden name="idUsuario" id="" value="<?php echo $linha['idUsuario']; ?>">
+    <label for="">Comprovante requisição</label>
+    <input type="file" class="form-control" name="comprovanteRequisicao" id="">
 
         </div>
         <div class="modal-footer">

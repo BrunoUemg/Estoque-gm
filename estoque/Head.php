@@ -116,7 +116,7 @@ if($_SESSION['idLocal'] != 0 ){
     
 
 }
-else {
+if($_SESSION['nomeUsuario'] != 'Financeiro' && $_SESSION['idLocal'] == 0 ) {
 echo  '<li class="nav-item">
 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
   <i class="fas fa-map-marker-alt"></i>
@@ -141,7 +141,8 @@ echo  '<li class="nav-item">
   <div class="bg-white py-2 collapse-inner rounded">
     <a class="collapse-item" href="CadastrarProduto.php">Cadastrar</a>
     <a class="collapse-item" href="ConsultarProduto.php">Consultar</a>
-
+    <a class="collapse-item" href="EntradasPendentes.php">Entradas Pendentes</a>
+    <a class="collapse-item" href="SaidasPendentes.php">Saídas Pendentes</a>
   </div>
 </div>
 </li>';
@@ -173,9 +174,23 @@ echo  '<li class="nav-item">
     <a class="collapse-item" href="RelatorioProdutoEmBaixa.php">Produtos no limite</a>
     <a class="collapse-item" href="RelatorioNotaFiscal.php">Nota Fiscal</a>
     <a class="collapse-item" href="RelatorioRequisicao.php">Requisição</a>
-    <a class="collapse-item" href="RelatorioListaRequisicao.php">Lista Requisição</a>
     <a class="collapse-item" href="RelatorioFuncionario.php">Funcionário</a>
 
+  </div>
+</div>
+</li>';
+}
+if($_SESSION['nomeUsuario'] == 'Financeiro'){
+  echo  '<li class="nav-item">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+  <i class="fas fa-box-open"></i>
+     <span>Produto</span>
+</a>
+<div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+  <div class="bg-white py-2 collapse-inner rounded">
+   
+    <a class="collapse-item" href="EntradasPendentes.php">Entradas Pendentes</a>
+    <a class="collapse-item" href="SaidasPendentes.php">Saídas Pendentes</a>
   </div>
 </div>
 </li>';
@@ -222,7 +237,7 @@ echo  '<li class="nav-item">
 
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <span>Bem vindo(a),  <?php echo $_SESSION['nomeUsuario']; echo $_SESSION['idUsuario']; ?></span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <span>Bem vindo(a),  <?php echo $_SESSION['nomeUsuario']; ?></span>
                         
                 <i class="fas fa-user-circle fa-2x"></i>              </a>
               <!-- Dropdown - User Information -->
@@ -278,8 +293,12 @@ echo  '<li class="nav-item">
         <div class="modal-body">
         <form action="AlterarPerfil.php" method="POST" onsubmit="return(verifica())">
         <input type="hidden" name="idUsuario" value="<?php echo $linha['idUsuario']; ?>">
+       <?php if($_SESSION['nomeUsuario'] == 'Financeiro'){ ?>
+        
+	  <input type="text" class="form-control" name="nomeUsuario" hidden value="<?php echo $linha['nomeUsuario']; ?>"><?php }?>
+    <?php if($_SESSION['nomeUsuario'] != 'Financeiro'){ ?>
         <label>Nome usuario</label>
-	  <input type="text" class="form-control" name="nomeUsuario" value="<?php echo $linha['nomeUsuario'];?>">
+	  <input type="text" class="form-control" name="nomeUsuario"  value="<?php echo $linha['nomeUsuario']; ?>"><?php }?>
     <label>Usuário</label>
 	  <input type="text" class="form-control"  name="user" value="<?php echo $linha['userAcesso'];?>">
     <label>Senha atual</label>

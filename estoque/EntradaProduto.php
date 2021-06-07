@@ -18,7 +18,7 @@ $linha = $res->fetch_assoc();
                 </div>
                 <div class="card-body">
                  
-                <form action="EnvioEntradaProduto.php" method="POST" class="form-horizontal form-label-left">
+                <form action="EnvioEntradaProduto.php" method="POST" enctype="multipart/form-data" class="form-horizontal form-label-left">
 
                 <input type="hidden" readonly class="form-control col-md-7 col-xs-12" name="idProduto" value="<?php echo $linha['idProduto']; ?>">
 
@@ -43,6 +43,14 @@ $linha = $res->fetch_assoc();
               </label>
            <div class="col-md-10 col-sm-6 col-xs-12">
                 <input class="form-control col-md-10 col-xs-12" maxlength="100" name="quantidadeEntrada" required="required" type="number">
+  </div>
+            </div>
+
+            <div class="item form-group">
+              <label class="control-label col-md-6 col-sm-3 col-xs-12">Comprovante em pdf
+              </label>
+           <div class="col-md-10 col-sm-6 col-xs-12">
+                <input class="form-control col-md-10 col-xs-12" maxlength="100" name="comprovanteFiscal" required="required" type="file">
   </div>
             </div>
 
