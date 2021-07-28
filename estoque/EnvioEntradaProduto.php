@@ -8,9 +8,9 @@ $idFornecedor = $_POST["idFornecedor"];
 $valor = $_POST["valor"];
 $data = date ("Y-m-d");
 
+session_start();
 
-
-$sql = "INSERT INTO notafiscal (idProduto,numeroNota,quantidade,dataEntrada,status, idFornecedor, valor) VALUES ($idProduto, '$numeroNota','$quantidadeEntrada','$data', 0, '$idFornecedor', '$valor')";
+$sql = "INSERT INTO notafiscal (idProduto,numeroNota,quantidade,dataEntrada,status, idFornecedor, valor, idUsuario) VALUES ($idProduto, '$numeroNota','$quantidadeEntrada','$data', 0, '$idFornecedor', '$valor', '$_SESSION[idUsuario]')";
 
 if ($con->query($sql) === TRUE){
    
@@ -40,7 +40,7 @@ if ($con->query($sql) === TRUE){
     
     }
     if($con->query($sql3) === TRUE){ 
-      session_start();
+     
       $select_produto = "SELECT * FROM produto where idProduto = '$idProduto'";
       $res = $con->query($select_produto);
       $linha = $res->fetch_assoc();
