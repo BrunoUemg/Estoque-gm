@@ -40,16 +40,15 @@ if ($con->query($sql) === TRUE)
         $idProduto= $lista['idProduto']; 
         $idLocal =  $lista['idLocal'];
         $quantidade= $lista['quantidade'];
-$quantidadeMax= $lista['quantidadeMax'];
+        $quantidadeMax= $lista['quantidadeMax'];
 
         $sql2 = "INSERT INTO listarequisicao (idRequisicao,idProduto,idLocal,quantidade,status)
     values ($idRequisicao,$idProduto,$idLocal,'$quantidade', 0)";
     
     $qtdFinal= $quantidadeMax - $quantidade;
 
-    $sql3="UPDATE produto set quantidadeProduto = $qtdFinal where idProduto= '$idProduto' and idLocal= '$idLocal' ";
-
-    if ($con->query($sql3) === TRUE){
+   
+   
 
 
 
@@ -92,7 +91,7 @@ $quantidadeMax= $lista['quantidadeMax'];
     } else {
             echo "Erro para inserir: " . $con->error; 
             }
-        } else { echo "Erro para inserir: " . $con->error; }
+      
     }
 } else 
         echo "Erro para inserir: " . $con->error; 

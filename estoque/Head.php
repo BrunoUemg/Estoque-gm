@@ -148,6 +148,20 @@ echo  '<li class="nav-item">
 </li>';
 
 echo  '<li class="nav-item">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#fornecedor" aria-expanded="true" aria-controls="collapseUtilities">
+<i class="fas fa-truck-moving"></i>
+     <span>Fornecedor</span>
+</a>
+<div id="fornecedor" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+  <div class="bg-white py-2 collapse-inner rounded">
+    <a class="collapse-item" href="CadastrarFornecedor.php">Cadastrar</a>
+    <a class="collapse-item" href="ConsultarFornecedor.php">Consultar</a>
+ 
+  </div>
+</div>
+</li>';
+
+echo  '<li class="nav-item">
 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
   <i class="fas fa-fw fa-user"></i>
   <span>Funcionario</span>
@@ -179,6 +193,21 @@ echo  '<li class="nav-item">
   </div>
 </div>
 </li>';
+
+echo  '<li class="nav-item">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFuor" aria-expanded="true" aria-controls="collapseThree">
+<i class="fas fa-file-pdf"></i>
+  <span>Comprovantes</span>
+</a>
+<div id="collapseFuor" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+  <div class="bg-white py-2 collapse-inner rounded">
+    <a class="collapse-item" href="visualizarComprovanteFiscal.php">Comprovante Fiscal </a>
+    <a class="collapse-item" href="visualizarComprovanteRequisicao.php">Comprovante Requisição </a>
+   
+
+  </div>
+</div>
+</li>';
 }
 if($_SESSION['nomeUsuario'] == 'Financeiro'){
   echo  '<li class="nav-item">
@@ -194,6 +223,23 @@ if($_SESSION['nomeUsuario'] == 'Financeiro'){
   </div>
 </div>
 </li>';
+
+echo  '<li class="nav-item">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+<i class="far fa-clipboard"></i>
+  <span>Relatórios</span>
+</a>
+<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+  <div class="bg-white py-2 collapse-inner rounded">
+   
+    <a class="collapse-item" href="RelatorioNotaFiscal.php">Nota Fiscal</a>
+  
+
+  </div>
+</div>
+</li>'
+
+;
 }
 
 ?>

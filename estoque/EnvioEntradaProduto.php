@@ -4,11 +4,13 @@ include_once "../dao/conexao.php";
 $idProduto = $_POST["idProduto"];
 $numeroNota = $_POST["numeroNota"];
 $quantidadeEntrada = $_POST["quantidadeEntrada"];
+$idFornecedor = $_POST["idFornecedor"];
+$valor = $_POST["valor"];
 $data = date ("Y-m-d");
 
 
 
-$sql = "INSERT INTO notafiscal (idProduto,numeroNota,quantidade,dataEntrada,status) VALUES ($idProduto, '$numeroNota','$quantidadeEntrada','$data', 0)";
+$sql = "INSERT INTO notafiscal (idProduto,numeroNota,quantidade,dataEntrada,status, idFornecedor, valor) VALUES ($idProduto, '$numeroNota','$quantidadeEntrada','$data', 0, '$idFornecedor', '$valor')";
 
 if ($con->query($sql) === TRUE){
    
@@ -38,6 +40,11 @@ if ($con->query($sql) === TRUE){
     
     }
     if($con->query($sql3) === TRUE){ 
+      session_start();
+      $select_produto = "SELECT * FROM produto where idProduto = '$idProduto'";
+      $res = $con->query($select_produto);
+      $linha = $res->fetch_assoc();
+      $con->query("INSERT INTO historico (dataHistorico,descricaoHistorico,idUsuario)VALUES('$data','Deu entrada no produto $linha[descricaoProduto]', '$_SESSION[idUsuario]')");
     echo "<script>alert('Produto adicionado com sucesso!');window.location='ConsultarProduto.php'</script>";
     }
     

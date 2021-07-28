@@ -157,7 +157,7 @@ foreach($_SESSION['carrinho'] as $lista) {
 
     <input type="text" hidden name="idUsuario" id="" value="<?php echo $linha['idUsuario']; ?>">
     <label for="">Comprovante requisição</label>
-    <input type="file" class="form-control" name="comprovanteRequisicao" id="">
+    <input type="file" required="required" class="form-control" name="comprovanteRequisicao" id="">
 
         </div>
         <div class="modal-footer">

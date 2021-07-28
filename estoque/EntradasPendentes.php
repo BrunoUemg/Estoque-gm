@@ -5,7 +5,7 @@ include_once("Head.php");
 
 <?php 
 include_once "../dao/conexao.php";
-$result_consultaFiscal="SELECT N.idNotaFiscal,N.quantidade,P.descricaoProduto, P.idProduto, L.nomeLocal FROM notaFiscal N 
+$result_consultaFiscal="SELECT N.idNotaFiscal,N.numeroNota,N.quantidade,N.comprovanteFiscal,P.descricaoProduto, P.idProduto, L.nomeLocal FROM notafiscal N 
 INNER JOIN produto P ON N.idProduto = P.idProduto INNER JOIN local L ON L.idLocal = P.idLocal 
 where N.status = 0 ";
 $resultado_consultaFiscal = mysqli_query($con, $result_consultaFiscal);
@@ -17,15 +17,16 @@ $resultado_consultaFiscal = mysqli_query($con, $result_consultaFiscal);
             <center>  <h3 class="m-0 font-weight-bold text-primary">Entradas Pendentes</h3><center>
             </div>
             <div class="card-body">
+            <form action="FinalizarEntradas.php" method="POST" enctype="multipart/form-data">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                     
+                      <th>Nota fiscal</th>
                       <th>Local</th>
                       <th>Produto</th>
                       <th>Ações</th>
-                   
+                      <th></th>
                     </tr>
                   </thead>
                 
@@ -33,20 +34,34 @@ $resultado_consultaFiscal = mysqli_query($con, $result_consultaFiscal);
                   <?php while($rows_consultaFiscal = mysqli_fetch_assoc($resultado_consultaFiscal)){ 
         ?>
                     <tr>
+                    <td><?php echo $rows_consultaFiscal['numeroNota']; ?></td>
                     <td><?php echo $rows_consultaFiscal['nomeLocal']; ?></td>
                     <td><?php echo $rows_consultaFiscal['descricaoProduto']; ?></td>
 	
 <td>
-<?php echo "<a class='btn btn-primary' title='Finalizar' href='EntradasPendentes.php?idNotaFiscal=".$rows_consultaFiscal['idNotaFiscal'] ."' data-toggle='modal' data-target='#finalizar".$rows_consultaFiscal['idNotaFiscal']."'>" ?>Finalizar<?php echo "</a>"; ?>
+<?php echo "<a class='btn btn-primary' title='Finalizar' href='EntradasPendentes.php?idNotaFiscal=".$rows_consultaFiscal['idNotaFiscal'] ."' data-toggle='modal' data-target='#finalizar".$rows_consultaFiscal['idNotaFiscal']."'>" ?>Visualizar<?php echo "</a>"; ?>
      <?php  echo "<a class='btn btn-success'  href='DadosNotaFiscal.php?idNotaFiscal=" .$rows_consultaFiscal['idNotaFiscal'] .  "'>Editar</a>";  ?>
-    <?php  echo "<a class='btn btn-danger' href='ExcluirNotaFiscal.php?idNotaFiscal=" .$rows_consultaFiscal['idNotaFiscal']. "'onclick=\"return confirm('Tem certeza que deseja deletar essa nota fiscal?');\"> Excluir</a>";  ?>
+   
+   
+    <?php  
+    
+    if($_SESSION['nomeUsuario'] != 'Financeiro' && $_SESSION['idLocal'] == 0){
+    echo "<a class='btn btn-danger' href='ExcluirNotaFiscal.php?idNotaFiscal=" .$rows_consultaFiscal['idNotaFiscal']. "'onclick=\"return confirm('Tem certeza que deseja deletar essa nota fiscal?');\"> Excluir</a>"; }  ?>
 	</td>
+
+ 
+  <td><input type="checkBox" class="form-control" id="check1"   name="entrada[]" value="<?php echo $rows_consultaFiscal['idNotaFiscal'];?>" ></td>
+  
+
+  
+
+  
     
     <div class="modal fade" id="finalizar<?php echo $rows_consultaFiscal['idNotaFiscal']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Finalizar entrada desse produto</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Visualizar entrada desse produto</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
@@ -57,15 +72,15 @@ $resultado_consultaFiscal = mysqli_query($con, $result_consultaFiscal);
         <input type="text" hidden name="idProduto"  class="form-control" value="<?php echo $rows_consultaFiscal['idProduto'];?>">
         <input type="text" hidden name="idNotaFiscal"  class="form-control" value="<?php echo $rows_consultaFiscal['idNotaFiscal'];?>">            
         <label>Descrição do Produto</label>
-       <input type="text" readOnly name="descricaoProduto" class="form-control" id="" value="<?php echo $rows_consultaFiscal['descricaoProduto'] ?>">
+       <input type="text" readOnly name="descricaoProduto" class="form-control"  value="<?php echo $rows_consultaFiscal['descricaoProduto'] ?>">
        <label for="">Quantidade</label>
-       <input type="text" readOnly name="quantidade" class="form-control" id="" value="<?php echo $rows_consultaFiscal['quantidade'] ?>">
-       <label for="">Senha Validação</label>
-       <input type="password" class="form-control" required="required" name="senha_validacao" id="">
+       <input type="text" readOnly name="quantidade" class="form-control"  value="<?php echo $rows_consultaFiscal['quantidade'] ?>">
+       <a href="../nota_fiscal/<?php echo $rows_consultaFiscal['comprovanteFiscal']; ?>" target="_blank" rel="noopener noreferrer">Visualizar comprovante</a><br>
+      
         </div>
         <div class="modal-footer">
           <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
-          <input type="submit" class="btn btn-primary" value="Adicionar">
+         
           </form>
 
         </div>
@@ -78,6 +93,11 @@ $resultado_consultaFiscal = mysqli_query($con, $result_consultaFiscal);
                   <?php }?>
                   </tbody>
                 </table>
+                <center>
+               <label for="">Senha de validação</label> 
+               <input type="password" name="senha_validacao" required="required" class="form-control  col-md-5 col-xs-12" id=""></center> <br>
+                <center> <input type='submit' name='button' value='Finalizar requisição' class="btn btn-success" ></center>  
+              </form>
               </div>
             </div>
 </div>

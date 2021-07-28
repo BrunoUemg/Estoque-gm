@@ -3,7 +3,7 @@
     "short_name": "estoque",
     "icons": [
         {
-            "src": "./icon.png",
+            "src": "img/icone.png",
             "sizes": "144x144"
         }
     ],

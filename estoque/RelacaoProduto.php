@@ -16,13 +16,13 @@ if(isset($_POST['dataInicio']))
 
     $dataInicio = $_POST['dataInicio'];
     $dataFinal = $_POST['dataFinal'];
-    $result_consultaFiscal = "SELECT SUM(quantidade) as total FROM `notafiscal` 
+    $result_consultaFiscal = "SELECT SUM(quantidade) as total FROM notafiscal 
     WHERE idProduto = '$idProduto' and dataEntrada >= '$dataInicio' and dataEntrada <= '$dataFinal' and status = 1 ";
     $res = $con-> query($result_consultaFiscal);
     $linha = $res->fetch_assoc();
 
-    $resul_requisicao = "SELECT SUM(listarequisicao.quantidade) AS total FROM `listarequisicao` INNER JOIN requisicao 
-    ON requisicao.idRequisicao = listarequisicao.idRequisicao where idProduto = '$idProduto' and requisicao.data >= '$dataInicio' and requisicao.data <= '$dataFinal'";
+    $resul_requisicao = "SELECT SUM(listarequisicao.quantidade) AS total FROM listarequisicao INNER JOIN requisicao 
+    ON requisicao.idRequisicao = listarequisicao.idRequisicao where idProduto = '$idProduto' and requisicao.data >= '$dataInicio' and requisicao.data <= '$dataFinal' and requisicao.status = 1";
     $res = $con->query($resul_requisicao);
     $linha2 = $res->fetch_assoc();
     

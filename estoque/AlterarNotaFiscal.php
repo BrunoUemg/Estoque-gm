@@ -5,8 +5,10 @@ include_once "../dao/conexao.php";
 $idNotaFiscal = $_POST['idNotaFiscal'];
 $quantidade = $_POST['quantidade'];
 $numeroNota = $_POST['numeroNota'];
+$idFornecedor = $_POST['idFornecedor'];
+$valor = $_POST['valor'];
 
-$update_nota = "UPDATE notafiscal set quantidade = '$quantidade', numeroNota = '$numeroNota' 
+$update_nota = "UPDATE notafiscal set quantidade = '$quantidade', numeroNota = '$numeroNota', idFornecedor = '$idFornecedor', valor = '$valor'
 where idNotaFiscal = '$idNotaFiscal'";
 
 if($con->query($update_nota) === TRUE){
