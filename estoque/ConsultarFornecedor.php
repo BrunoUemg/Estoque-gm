@@ -23,6 +23,7 @@ $resultado_consultaFornecedor = mysqli_query($con, $result_consultaFornecedor);
                       <th>Nome fantasia</th>
                       <th>Celular</th>
                       <th>E-mail</th>
+                      <th>Observação</th>
                       <th>Ações</th>
                    
                     </tr>
@@ -35,6 +36,7 @@ $resultado_consultaFornecedor = mysqli_query($con, $result_consultaFornecedor);
                     <td><?php echo $rows_consultaFornecedor['nomeFantasia']; ?></td>
                     <td><?php echo $rows_consultaFornecedor['celular']; ?></td>
                     <td><?php echo $rows_consultaFornecedor['email']; ?></td>
+                    <td><?php echo $rows_consultaFornecedor['observacao']; ?></td>
 
 	
 <td>
@@ -63,6 +65,11 @@ $resultado_consultaFornecedor = mysqli_query($con, $result_consultaFornecedor);
 
         <label>Razão Social</label>
         <input type="text" class="form-control" name="razaoSocial"  value="<?php echo $rows_consultaFornecedor['razaoSocial']; ?>">
+        <label for="">CNPJ/CPF</label>
+        <input type="text" class="form-control" name="doc" onKeyPress="MascaraGenerica(this, 'CPFCNPJ');" value="<?php echo $rows_consultaFornecedor['doc']; ?>">
+        <label for="">Observação</label>
+        <textarea name="observacao" class="form-control" id="" cols="30" rows="10"><?php echo $rows_consultaFornecedor['observacao']; ?></textarea>
+        
         <label>Telefone</label>
         <input type="text" class="form-control" name="telefone" onkeyup="mascara('(##) ####-####',this,event,true)" value="<?php echo $rows_consultaFornecedor['telefone']; ?>">
 
@@ -141,7 +148,7 @@ $resultado_consultaFornecedor = mysqli_query($con, $result_consultaFornecedor);
 
 <!-- Page level plugins -->
 <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
+<script src="../js/mascaras.js"></script>
 
 <script type="text/javascript">
         $(document).ready(function() {

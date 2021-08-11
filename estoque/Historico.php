@@ -7,12 +7,51 @@ include_once("Head.php")
 <?php 
 include_once "../dao/conexao.php";
 $idUsuario = $_GET['idUsuario'];
+if(empty($_POST['dataInicio'])){
+
 $result_consultaFuncionario="SELECT * FROM historico where idUsuario = '$idUsuario' ";
 $resultado_consultaFuncionario = mysqli_query($con, $result_consultaFuncionario);
+}else{
+  $dataInicio = $_POST['dataInicio'];
+  $dataFinal = $_POST['dataFinal'];
+$result_consultaFuncionario="SELECT * FROM historico where idUsuario = '$idUsuario' and dataHistorico >= '$dataInicio' and dataHistorico <= '$dataFinal' ";
+$resultado_consultaFuncionario = mysqli_query($con, $result_consultaFuncionario);
+}
 ?>
  <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
- <div class="card shadow mb-4">
- 
+
+
+<div class="container-fluid">
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+<div class="card-header py-3">
+  <center><h3 class="m-0 font-weight-bold text-primary">Filtro</h3></center>
+      
+  <form action="" class="row g-3" method="POST" onsubmit="return(verifica())" class="form-horizontal form-label-left">
+
+
+<div class="col-md-4">
+  <label  class="form-label">Data Início</label>
+  <input type="date" required="required" id="dataInicio" class="form-control" name="dataInicio" value="<?php echo $dataInicio;?>">
+</div>
+
+<div class="col-md-4">
+  <label  class="form-label">Data Final</label>
+  <input type="date" required="required" id="dataFinal" class="form-control" name="dataFinal" value="<?php echo $dataFinal;?>" >
+
+
+</div>
+
+<div class="col-12">
+<br>
+
+    <button type="submit" class="btn btn-primary">Buscar</button>
+  </div>
+</form>
+<br>
+
+
             <div class="card-header py-3">
             <center>  <h3 class="m-0 font-weight-bold text-primary">Consultar Histórico</h3><center>
             </div>

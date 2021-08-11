@@ -31,6 +31,13 @@ include_once("../dao/conexao.php");
                 <input class="form-control col-md-10 col-xs-12" maxlength="100" name="nomeFantasia" required="required" type="text">
   </div>
             </div>
+            <div class="item form-group">
+              <label class="control-label col-md-6 col-sm-3 col-xs-12">CNPJ/CPF
+              </label>
+           <div class="col-md-10 col-sm-6 col-xs-12">
+                <input class="form-control col-md-10 col-xs-12" maxlength="100" onKeyPress="MascaraGenerica(this, 'CPFCNPJ');" name="doc" required="required" type="text">
+  </div>
+            </div>
 
             <div class="item form-group">
               <label class="control-label col-md-6 col-sm-3 col-xs-12">Telefone
@@ -51,6 +58,13 @@ include_once("../dao/conexao.php");
               </label>
            <div class="col-md-10 col-sm-6 col-xs-12">
                 <input class="form-control col-md-10 col-xs-12" maxlength="100" name="email"  type="email">
+  </div>
+            </div>
+            <div class="item form-group">
+              <label class="control-label col-md-6 col-sm-3 col-xs-12">Observação
+              </label>
+           <div class="col-md-10 col-sm-6 col-xs-12">
+               <textarea name="observacao" class="form-control col-md-10 col-xs-12" id="" cols="30" rows="5"></textarea>
   </div>
             </div>
           
@@ -75,8 +89,6 @@ include_once("../dao/conexao.php");
               </div>
 </div> 
 
-
-    
 
 
 
