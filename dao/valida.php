@@ -26,6 +26,7 @@ $id = $linha['idUsuario'];
         $_SESSION['nomeUsuario'] = $nome;
         $_SESSION['idLocal'] = $idLocal;
 		$_SESSION['userAcesso'] = $user;
+		$_SESSION['estoquegm'] = true;
 
         $con->query("INSERT INTO historico (dataHistorico,descricaoHistorico,idUsuario)VALUES('$data','Entrou no sistema', '$id')");
 	

@@ -1,7 +1,7 @@
 <?php
 include "../dao/conexao.php";
 	session_start();
-		if(!isset($_SESSION['nomeUsuario']))
+		if(!isset($_SESSION['estoquegm']))
 		{
 			header('location: ../Index.html');
     }
@@ -96,7 +96,20 @@ if($_SESSION['idLocal'] != 0 ){
           </div>
         </div>
       </li>';
-
+      
+      echo  '<li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#fornecedor" aria-expanded="true" aria-controls="collapseUtilities">
+      <i class="fas fa-truck-moving"></i>
+           <span>Fornecedor</span>
+      </a>
+      <div id="fornecedor" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="CadastrarFornecedor.php">Cadastrar</a>
+          <a class="collapse-item" href="ConsultarFornecedor.php">Consultar</a>
+       
+        </div>
+      </div>
+      </li>';
 
       echo  '<li class="nav-item">
 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">

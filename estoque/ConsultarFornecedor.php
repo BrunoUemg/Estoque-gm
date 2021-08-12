@@ -40,7 +40,9 @@ $resultado_consultaFornecedor = mysqli_query($con, $result_consultaFornecedor);
 
 	
 <td>
-<?php echo "<a class='btn btn-primary' href='ConsultarFornecedor.php?idFornecedor=".$rows_consultaFornecedor['idFornecedor'] ."' data-toggle='modal' data-target='#FornecedorModal".$rows_consultaFornecedor['idFornecedor']."'>" ?>Alterar<?php echo "</a>"; ?>
+<?php 
+if($_SESSION['idLocal'] == 0){
+echo "<a class='btn btn-primary' href='ConsultarFornecedor.php?idFornecedor=".$rows_consultaFornecedor['idFornecedor'] ."' data-toggle='modal' data-target='#FornecedorModal".$rows_consultaFornecedor['idFornecedor']."'>" ?>Alterar<?php echo "</a>"; } ?>
     <?php  echo "<a class='btn btn-danger' href='ExcluirFornecedor.php?idFornecedor=" .$rows_consultaFornecedor['idFornecedor']. "'onclick=\"return confirm('Tem certeza que deseja deletar esse funcionário?');\"> Excluir</a>";  ?>
    
    
