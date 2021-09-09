@@ -13,6 +13,12 @@ $sql = "SELECT * FROM usuario WHERE idUsuario = '$idUsuario' " ;
 
 $res = $con-> query($sql);
 $linha = $res->fetch_assoc();
+$sql2 = "SELECT * FROM nivel_acesso WHERE idUsuario = '$idUsuario' " ;
+
+
+
+$res = $con-> query($sql2);
+$linha2 = $res->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -81,54 +87,78 @@ $linha = $res->fetch_assoc();
       
 ?>
 <?php
-if($_SESSION['idLocal'] != 0 ){
-  echo  '<li class="nav-item">
+if($_SESSION['idLocal'] != 0 ){ ?>
+      <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
           <i class="fas fa-box-open"></i>
              <span>Produto</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
+            <?php if($linha2['cadProduto'] == 1){ ?>
             <a class="collapse-item" href="CadastrarProduto.php">Cadastrar</a>
+            <?php } if($linha2['consulProduto'] == 1){ ?>
             <a class="collapse-item" href="ConsultarProduto.php">Consultar</a>
-           
+            <?php } ?>
 
           </div>
         </div>
-      </li>';
+      </li>
       
-      echo  '<li class="nav-item">
+      <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#fornecedor" aria-expanded="true" aria-controls="collapseUtilities">
       <i class="fas fa-truck-moving"></i>
            <span>Fornecedor</span>
       </a>
       <div id="fornecedor" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
+        <?php  if($linha2['cadFornecedor'] == 1){ ?>
           <a class="collapse-item" href="CadastrarFornecedor.php">Cadastrar</a>
+          <?php } if($linha2['consulFornecedor'] == 1){ ?>
           <a class="collapse-item" href="ConsultarFornecedor.php">Consultar</a>
-       
+            <?php } ?>
         </div>
       </div>
-      </li>';
+      </li>
 
-      echo  '<li class="nav-item">
+      <li class="nav-item">
 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
 <i class="far fa-clipboard"></i>
   <span>Relatórios</span>
 </a>
 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
   <div class="bg-white py-2 collapse-inner rounded">
+  <?php  if($linha2['relaProEstoque'] == 1){ ?>
     <a class="collapse-item" href="RelatorioProduto.php">Produtos em estoque</a>
+    <?php } if($linha2['relaLimite'] == 1){ ?>
     <a class="collapse-item" href="RelatorioProdutoEmBaixa.php">Produto no limite</a>
+    <?php } if($linha2['relaFiscal'] == 1){ ?>
     <a class="collapse-item" href="RelatorioNotaFiscal.php">Nota Fiscal</a>
+    <?php } if($linha2['relaRequisicao'] == 1){ ?>
     <a class="collapse-item" href="RelatorioRequisicao.php">Requisição</a>
-    <a class="collapse-item" href="RelatorioListaRequisicao.php">Lista Requisição</a>
+    <?php } ?>
   </div>
 </div>
-</li>';
-    
+</li>
 
-}
+<li class="nav-item">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFuor" aria-expanded="true" aria-controls="collapseThree">
+<i class="fas fa-file-pdf"></i>
+  <span>Comprovantes</span>
+</a>
+<div id="collapseFuor" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+  <div class="bg-white py-2 collapse-inner rounded">
+  <?php  if($linha2['compFiscal'] == 1){ ?>
+    <a class="collapse-item" href="visualizarComprovanteFiscal.php">Comprovante Fiscal </a>
+    <?php } if($linha2['compRequi'] == 1){ ?>
+    <a class="collapse-item" href="visualizarComprovanteRequisicao.php">Comprovante Requisição </a>
+   <?php } ?>
+
+  </div>
+</div>
+</li>    
+
+<?php }
 if($_SESSION['nomeUsuario'] != 'Financeiro' && $_SESSION['idLocal'] == 0 ) {
 echo  '<li class="nav-item">
 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -183,6 +213,7 @@ echo  '<li class="nav-item">
   <div class="bg-white py-2 collapse-inner rounded">
   <a class="collapse-item" href="CadastrarFuncionario.php">Cadastrar</a>
     <a class="collapse-item" href="ConsultarFuncionario.php">Consultar</a>
+    <a class="collapse-item" href="ConsultarFuncionarioDesligado.php">Consultar desligados</a>
    
   
   </div>
@@ -222,38 +253,7 @@ echo  '<li class="nav-item">
 </div>
 </li>';
 }
-if($_SESSION['nomeUsuario'] == 'Financeiro'){
-  echo  '<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-  <i class="fas fa-box-open"></i>
-     <span>Produto</span>
-</a>
-<div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-  <div class="bg-white py-2 collapse-inner rounded">
-   
-    <a class="collapse-item" href="EntradasPendentes.php">Entradas Pendentes</a>
-    <a class="collapse-item" href="SaidasPendentes.php">Saídas Pendentes</a>
-  </div>
-</div>
-</li>';
 
-echo  '<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-<i class="far fa-clipboard"></i>
-  <span>Relatórios</span>
-</a>
-<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
-  <div class="bg-white py-2 collapse-inner rounded">
-   
-    <a class="collapse-item" href="RelatorioNotaFiscal.php">Nota Fiscal</a>
-  
-
-  </div>
-</div>
-</li>'
-
-;
-}
 
 ?>
 

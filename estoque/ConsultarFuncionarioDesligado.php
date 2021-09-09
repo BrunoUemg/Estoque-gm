@@ -6,13 +6,32 @@ include_once("Head.php")
 
 <?php 
 include_once "../dao/conexao.php";
+
+if(!empty($_GET['idUsuario'])){
+
+    $idUsuario=$_GET['idUsuario'];
+
+$sql = "UPDATE usuario set status = 1 where idUsuario = $idUsuario "; 
+
+
+
+if($con->query($sql)=== true){
+echo "<script>alert('Cadastro ativado com sucesso!');window.location='ConsultarFuncionario.php'</script>";
+} else {
+	echo "Erro para excluir: " . $con->error; 
+	
+}
+$con->close();
+}
+
+
 $result_consultaFuncionario="SELECT U.idUsuario,
 U.nomeUsuario,
 U.userAcesso,
 L.nomeLocal,
 U.idLocal 
 from usuario U, local L
-where U.idLocal = L.idLocal and U.status = 1";
+where U.idLocal = L.idLocal and U.status = 0";
 $resultado_consultaFuncionario = mysqli_query($con, $result_consultaFuncionario);
 ?>
  <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -45,10 +64,8 @@ $resultado_consultaFuncionario = mysqli_query($con, $result_consultaFuncionario)
 	
 <td>
      
-    <?php  echo "<a class='btn btn-danger' href='ExcluirFuncionario.php?idUsuario=" .$rows_consultaFuncionario['idUsuario']. "'onclick=\"return confirm('Tem certeza que deseja desligar esse funcionário?');\"> Desligar</a>";  ?>
-    <?php  echo "<a class='btn btn-secondary' href='Historico.php?idUsuario=" .$rows_consultaFuncionario['idUsuario']. "'> Histórico</a>";  ?>
-    <?php  echo "<a class='btn btn-secondary' href='editarFuncaoFuncionario.php?idUsuario=" .$rows_consultaFuncionario['idUsuario']. "'> Função</a>";  ?>
-    <?php echo "<a class='btn btn-primary' href='ConsultarFuncionario.php?idUsuario=".$rows_consultaFuncionario['idUsuario'] ."' data-toggle='modal' data-target='#FuncionarioModal".$rows_consultaFuncionario['idUsuario']."'>" ?>Alterar<?php echo "</a>"; ?>
+    <?php  echo "<a class='btn btn-success' href='ConsultarFuncionarioDesligado.php?idUsuario=" .$rows_consultaFuncionario['idUsuario']. "'onclick=\"return confirm('Tem certeza que deseja ativar esse funcionário?');\"> Ativar</a>";  ?>
+   
    <!-- Modal-->
    <div class="modal fade" id="FuncionarioModal<?php echo $rows_consultaFuncionario['idUsuario']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

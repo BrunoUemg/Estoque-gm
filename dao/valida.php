@@ -7,7 +7,7 @@ $senha = $_POST['senha'];
 $data = date("Y-m-d");
 
 
-$sql = "SELECT * FROM usuario WHERE userAcesso = '$usuario'  ";
+$sql = "SELECT * FROM usuario WHERE userAcesso = '$usuario' and status = 1 ";
 		
 $res = $con->query($sql);
 $linha = $res->fetch_assoc();
