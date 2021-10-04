@@ -27,12 +27,15 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
                       <th>Data</th>
                       <th>Solicitante</th>  
                       <th>Ações</th>
-                      <th>Finalizar</th>
+                      <th><input type="checkBox" onclick="selecionar()" class="form-control"  name="" id="adi"></th>
                     </tr>
                   </thead>
                 
                   <tbody>
-                  <?php while($rows_consultaRequisicao = mysqli_fetch_assoc($resultado_consultaRequisicao)){ 
+                  <?php 
+                  
+                  $cont = 1;
+                  while($rows_consultaRequisicao = mysqli_fetch_assoc($resultado_consultaRequisicao)){ 
         ?>
                     <tr>
                     <td><?php echo $rows_consultaRequisicao['codigo']; ?></td>
@@ -54,7 +57,7 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
     
 	</td>
 
-   <td><input type="checkBox" class="form-control"  name="requi[]" value="<?php echo $rows_consultaRequisicao['idRequisicao'];?>" ></td>                 
+   <td><input type="checkBox" class="form-control"  name="requi[]" id="<?php echo $cont; ?>" value="<?php echo $rows_consultaRequisicao['idRequisicao'];?>" ></td>                 
   
 
 
@@ -103,7 +106,12 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
        
       
 
-       <?php } ?>             
+       <?php 
+      $cont += 1;
+      }
+      
+      $cont -= 1;
+      ?>             
        </div>  
        <br>
        <a href="../requisicao/<?php echo $rows_consultaRequisicao['comprovanteRequisicao']?>" class='btn btn-primary' target="_blank" rel="noopener noreferrer">Visualizar comprovante</a>
@@ -137,6 +145,31 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
             </div>
            
 </div>
+
+<script>
+
+function selecionar() {
+  
+  if(document.getElementById("adi").checked == true){
+    var cont2 = 1;
+    var cont = <?php echo $cont; ?>;
+    for(cont2; cont2 <= cont; cont2++){
+  document.getElementById(cont2).checked = true;
+  document.getElementById(cont2).checked = true;
+    }
+  }
+  if(document.getElementById("adi").checked == false){
+    var cont2 = 1;
+    var cont = <?php echo $cont; ?>;
+    for(cont2; cont2 <= cont; cont2++){
+  document.getElementById(cont2).checked = false;
+  document.getElementById(cont2).checked = false;
+    }
+  }
+  
+}
+
+</script>
 
 
 </div>
