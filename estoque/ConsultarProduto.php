@@ -145,7 +145,7 @@ while($rows_ProdutoLimiteFuncionario = mysqli_fetch_assoc($resultado_ProdutoLimi
           <td><?php echo $rows_consultaProdutoFuncionario['nomeLocal'];?></td>
            
           <td>
-    <?php  echo "<a class='btn btn-success' title='adicionar Produto' href='EntradaProduto.php?idProduto=".$rows_consultaProdutoFuncionario['idProduto'] .  "'>" ?><i class="fas fa-cart-plus"></i><?php echo "</a>"; ?>
+          <?php echo "<a class='btn btn-success' title='Adicionar Produto ' href='ConsultarProduto.php?idProduto=".$rows_consultaProdutoFuncionario['idProduto'] ."' data-toggle='modal' data-target='#entradaModal".$rows_consultaProdutoFuncionario['idProduto']."'>" ?><i class="fas fa-cart-plus"></i><?php echo "</a>"; ?>
     <?php  echo "<a class='btn btn-primary' title='Editar Produto' href='DadosProduto.php?idProduto=".$rows_consultaProdutoFuncionario['idProduto'] .  "'>" ?><i class='fas fa-edit'></i><?php echo "</a>"; ?>
     <?php echo "<a class='btn btn-warning' title='Adicionar Produto no Carrinho' href='ConsultarProduto.php?idProduto=".$rows_consultaProdutoFuncionario['idProduto'] ."' data-toggle='modal' data-target='#carrinhoModal".$rows_consultaProdutoFuncionario['idProduto']."'>" ?><i class='fas fa-cart-arrow-down'></i><?php echo "</a>"; ?>
 
@@ -192,6 +192,55 @@ while($rows_ProdutoLimiteFuncionario = mysqli_fetch_assoc($resultado_ProdutoLimi
     </div>
   </div>
 </td>
+<div class="modal fade" id="entradaModal<?php echo $rows_consultaProdutoFuncionario['idProduto']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Adicionar produto ao carrinho</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        <form action="EntradaProduto.php" method="POST">
+
+        <input type="text" hidden name="idProduto"  class="form-control" value="<?php echo $rows_consultaProdutoFuncionario['idProduto'];?>">
+
+        <label>Descrição do Produto</label>
+        <input type="text" class="form-control" disabled value="<?php echo $rows_consultaProdutoFuncionario['descricaoProduto']; ?>">
+
+
+<input type="hidden" class="form-control" name="descricao" value="<?php echo $rows_consultaProdutoFuncionario['descricaoProduto']; ?>">
+
+<input type="hidden" class="form-control" name="quantidadeMax" value="<?php echo $rows_consultaProdutoFuncionario['quantidadeProduto']; ?>">
+
+<input type="hidden" class="form-control" name="idLocal" value="<?php echo $rows_consultaProdutoFuncionario['idLocal']; ?>">
+<label for="">Fornecedor</label>
+<select name="idFornecedor" required class="form-control col-md-10 col-xs-12" id="">
+                  <?php $select_fornecedor = mysqli_query($con, "SELECT * FROM fornecedor"); ?>
+                  <option value="">Selecione</option>
+                 <?php while($rows_fornecedor = mysqli_fetch_assoc($select_fornecedor)){ ?>
+                  <option value="<?php echo $rows_fornecedor['idFornecedor']; ?>"><?php echo $rows_fornecedor['nomeFantasia'] ?></option>
+                  <?php } ?>
+                </select>
+      <label>Quantidade</label>
+
+        <input type="number" class="form-control" name="quantidadeEntrada" min="1">
+
+         <label for="">Valor</label>         
+         <input onKeyPress="return(moeda(this,'','.',event))" type="text" class="form-control" name="valor" min="1" >
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
+          <input type="submit" class="btn btn-primary" value="Adicionar">
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</td>
             </tr>
           <?php } 
         } else if ($_SESSION['idLocal']==0) {
@@ -206,7 +255,7 @@ while($rows_consultaProduto = mysqli_fetch_assoc($resultado_consultaProduto)){
  <td><?php echo $rows_consultaProduto['nomeLocal'];?></td>
   
  <td>
-<?php  echo "<a class='btn btn-success' title='Adicionar Produto' href='EntradaProduto.php?idProduto=".$rows_consultaProduto['idProduto'] .  "'>" ?><i class="fas fa-cart-plus"></i><?php echo "</a>"; ?>
+<?php echo "<a class='btn btn-success' title='Adicionar Produto ' href='ConsultarProduto.php?idProduto=".$rows_consultaProduto['idProduto'] ."' data-toggle='modal' data-target='#entradaModal".$rows_consultaProduto['idProduto']."'>" ?><i class="fas fa-cart-plus"></i><?php echo "</a>"; ?>
 <?php  echo "<a class='btn btn-primary' title='Editar Produto' href='DadosProduto.php?idProduto=".$rows_consultaProduto['idProduto'] .  "'>" ?><i class='fas fa-edit'></i><?php echo "</a>";?>
 <?php  echo "<a  class='btn btn-danger' title='Excluir Produto' href='ExcluirProduto.php?idProduto=" .$rows_consultaProduto['idProduto']. "' onclick=\"return confirm('Tem certeza que deseja deletar esse registro?');\">"?> <i class='fas fa-trash-alt'></i><?php echo "</a>";  ?>
 <?php echo "<a class='btn btn-warning' title='Adicionar Produto no Carrinho' href='ConsultarProduto.php?idProduto=".$rows_consultaProduto['idProduto'] ."' data-toggle='modal' data-target='#carrinhoModal".$rows_consultaProduto['idProduto']."'>" ?><i class='fas fa-cart-arrow-down'></i><?php echo "</a>"; ?>
@@ -242,6 +291,55 @@ while($rows_consultaProduto = mysqli_fetch_assoc($resultado_consultaProduto)){
       <label>Quantidade</label>
 
         <input type="number" class="form-control" name="quantidade" min="1" max="<?php echo $rows_consultaProduto['quantidadeProduto']; ?>">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
+          <input type="submit" class="btn btn-primary" value="Adicionar">
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</td>
+   <div class="modal fade" id="entradaModal<?php echo $rows_consultaProduto['idProduto']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Adicionar produto ao carrinho</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        <form action="EntradaProduto.php" method="POST">
+
+        <input type="text" hidden name="idProduto"  class="form-control" value="<?php echo $rows_consultaProduto['idProduto'];?>">
+
+        <label>Descrição do Produto</label>
+        <input type="text" class="form-control" disabled value="<?php echo $rows_consultaProduto['descricaoProduto']; ?>">
+
+
+<input type="hidden" class="form-control" name="descricao" value="<?php echo $rows_consultaProduto['descricaoProduto']; ?>">
+
+<input type="hidden" class="form-control" name="quantidadeMax" value="<?php echo $rows_consultaProduto['quantidadeProduto']; ?>">
+
+<input type="hidden" class="form-control" name="idLocal" value="<?php echo $rows_consultaProduto['idLocal']; ?>">
+<label for="">Fornecedor</label>
+<select name="idFornecedor" required class="form-control col-md-10 col-xs-12" id="">
+                  <?php $select_fornecedor = mysqli_query($con, "SELECT * FROM fornecedor"); ?>
+                  <option value="">Selecione</option>
+                 <?php while($rows_fornecedor = mysqli_fetch_assoc($select_fornecedor)){ ?>
+                  <option value="<?php echo $rows_fornecedor['idFornecedor']; ?>"><?php echo $rows_fornecedor['nomeFantasia'] ?></option>
+                  <?php } ?>
+                </select>
+      <label>Quantidade</label>
+
+        <input type="number" class="form-control" name="quantidadeEntrada" min="1">
+
+         <label for="">Valor</label>         
+         <input onKeyPress="return(moeda(this,'','.',event))" type="text" class="form-control" name="valor" min="1" >
+
         </div>
         <div class="modal-footer">
           <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
@@ -365,6 +463,45 @@ while($rows_consultaProduto = mysqli_fetch_assoc($resultado_consultaProduto)){
 }
     } );
 } );
+</script>
+<script>
+   function moeda(a, e, r, t) {
+        let n = ""
+          , h = j = 0
+          , u = tamanho2 = 0
+          , l = ajd2 = ""
+          , o = window.Event ? t.which : t.keyCode;
+        if (13 == o || 8 == o)
+            return !0;
+        if (n = String.fromCharCode(o),
+        -1 == "0123456789".indexOf(n))
+            return !1;
+        for (u = a.value.length,
+        h = 0; h < u && ("0" == a.value.charAt(h) || a.value.charAt(h) == r); h++)
+            ;
+        for (l = ""; h < u; h++)
+            -1 != "0123456789".indexOf(a.value.charAt(h)) && (l += a.value.charAt(h));
+        if (l += n,
+        0 == (u = l.length) && (a.value = ""),
+        1 == u && (a.value = "0" + r + "0" + l),
+        2 == u && (a.value = "0" + r + l),
+        u > 2) {
+            for (ajd2 = "",
+            j = 0,
+            h = u - 3; h >= 0; h--)
+                3 == j && (ajd2 += e,
+                j = 0),
+                ajd2 += l.charAt(h),
+                j++;
+            for (a.value = "",
+            tamanho2 = ajd2.length,
+            h = tamanho2 - 1; h >= 0; h--)
+                a.value += ajd2.charAt(h);
+            a.value += r + l.substr(u - 2, u)
+        }
+        return !1
+    }
+ 
 </script>
 
 </body>

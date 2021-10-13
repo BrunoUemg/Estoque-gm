@@ -287,7 +287,12 @@ echo  '<li class="nav-item">
    
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="Carrinho.php" >
+              <a class="nav-link dropdown-toggle" href="EntradaProduto.php" >Entrada
+                <i class="fas fa-dolly text-gray-600" title="Entre no Carinho"></i>
+</a>
+</li>
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="Carrinho.php" >Saída
                 <i class="fas fa-dolly text-gray-600" title="Entre no Carinho"></i>
 </a>
 </li>
