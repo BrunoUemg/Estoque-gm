@@ -18,7 +18,7 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
              <form action="FinalizarRequisicao.php" method="POST" enctype="multipart/form-data">
               <div class="table-responsive">
              
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                      
@@ -27,7 +27,7 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
                       <th>Data</th>
                       <th>Solicitante</th>  
                       <th>Ações</th>
-                      <th><input type="checkBox" onclick="selecionar()" class="form-control"  name="" id="adi"></th>
+                      <th style="width: 40px;"><input type="checkBox" onclick="selecionar()" class="form-control"  name="adi" id="adi"></th>
                     </tr>
                   </thead>
                 
@@ -107,10 +107,10 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
       
 
        <?php 
-      $cont += 1;
+    
       }
       
-      $cont -= 1;
+     
       ?>             
        </div>  
        <br>
@@ -130,7 +130,12 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
 </td>
 	
     </tr>
-                  <?php }?>
+                  <?php 
+                
+                $cont += 1;
+                }
+                $cont -= 1;
+                ?>
                  
                   </tbody>
                 
