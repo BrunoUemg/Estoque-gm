@@ -5,9 +5,10 @@ include_once("Head.php");
 
 <?php 
 include_once "../dao/conexao.php";
+
 $result_consultaFiscal="SELECT N.idNotaFiscal,N.numeroNota,N.quantidade,N.comprovanteFiscal,P.descricaoProduto, P.idProduto, L.nomeLocal FROM notafiscal N 
 INNER JOIN produto P ON N.idProduto = P.idProduto INNER JOIN local L ON L.idLocal = P.idLocal 
-where N.status = 0 ";
+where N.status = 0 LIMIT 9999999";
 $resultado_consultaFiscal = mysqli_query($con, $result_consultaFiscal);
 ?>
  <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -19,7 +20,7 @@ $resultado_consultaFiscal = mysqli_query($con, $result_consultaFiscal);
             <div class="card-body">
             <form action="FinalizarEntradas.php" method="POST" enctype="multipart/form-data">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>Nota fiscal</th>
