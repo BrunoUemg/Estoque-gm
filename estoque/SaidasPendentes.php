@@ -45,7 +45,7 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
                             echo $dataBr;?></td>
                     <td><?php echo $rows_consultaRequisicao['solicitante']; ?></td>
                   
-<td>
+<td class="d-flex justify-content-center align-items-center">
 <?php echo "<a class='btn btn-primary' title='Informações' href='SaidasPendentes.php?idRequisicao=".$rows_consultaRequisicao['idRequisicao'] ."' data-toggle='modal' data-target='#finalizar".$rows_consultaRequisicao['idRequisicao']."'>" ?>Informações<?php echo "</a>"; ?>
      <?php  echo "<a class='btn btn-success'  href='DadosRequisicao.php?idRequisicao=" .$rows_consultaRequisicao['idRequisicao'] .  "'>Editar</a>";  ?>
     
