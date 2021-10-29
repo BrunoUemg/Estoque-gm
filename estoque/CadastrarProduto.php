@@ -29,10 +29,10 @@ $linha = $res->fetch_assoc();
   </div>
             </div>
             <div class="item form-group">
-              <label class="control-label col-md-6 col-sm-3 col-xs-12">Quantidade 
+             
               </label>
            <div class="col-md-10 col-sm-6 col-xs-12">
-                <input class="form-control col-md-10 col-xs-12" maxlength="100" name="quantidadeProduto" required="required" type="number">
+                <input class="form-control col-md-10 col-xs-12" maxlength="100" hidden name="quantidadeProduto" value="0" type="number">
   </div>
             </div>
 
