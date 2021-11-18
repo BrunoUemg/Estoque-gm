@@ -3,6 +3,8 @@ include_once("../dao/conexao.php");
 
 include_once("Head.php");
 
+
+if($_SESSION['idLocal'] == null){
 $result_consultaProduto="SELECT P.idProduto,
 P.descricaoProduto, 
 P.quantidadeProduto ,
@@ -12,7 +14,8 @@ L.nomeLocal
 FROM produto P, local L 
 WHERE P.idLocal = L.idLocal  ";
 $resultado_consultaProduto = mysqli_query($con, $result_consultaProduto);
-
+}
+if($_SESSION['idLocal'] != null){
 $result_consultaProdutoFuncionario="SELECT P.idProduto,
 P.descricaoProduto, 
 P.quantidadeProduto ,
@@ -22,8 +25,8 @@ L.nomeLocal
 FROM produto P, local L 
 WHERE P.idLocal = '$_SESSION[idLocal]' and P.idLocal = L.idLocal ";
 $resultado_consultaProdutoFuncionario = mysqli_query($con, $result_consultaProdutoFuncionario);
-
-
+}
+if($_SESSION['idLocal'] != null){
 $result_ProdutoLimiteFuncionario="SELECT idProduto,
 descricaoProduto, 
 quantidadeProduto,
@@ -32,7 +35,8 @@ idLocal
 FROM produto  
 WHERE quantidadeProduto <= quantidadeMin and idLocal = '$_SESSION[idLocal]' ";
 $resultado_ProdutoLimiteFuncionario = mysqli_query($con, $result_ProdutoLimiteFuncionario);
-
+}
+if($_SESSION['idLocal'] == null){
 $result_ProdutoLimite="SELECT idProduto,
 descricaoProduto, 
 quantidadeProduto,
@@ -40,7 +44,7 @@ quantidadeMin
 FROM produto  
 WHERE quantidadeProduto <= quantidadeMin  ";
 $resultado_ProdutoLimite = mysqli_query($con, $result_ProdutoLimite);
-
+}
 ?>
 
 <div class="container-fluid">
