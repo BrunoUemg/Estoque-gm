@@ -3,6 +3,7 @@ include_once("../dao/conexao.php");
 
 include_once("Head.php");
 
+$time_beg = microtime(true);
 
 if($_SESSION['idLocal'] == null){
 $result_consultaProduto="SELECT P.idProduto,
@@ -45,6 +46,9 @@ FROM produto
 WHERE quantidadeProduto <= quantidadeMin  ";
 $resultado_ProdutoLimite = mysqli_query($con, $result_ProdutoLimite);
 }
+
+$time_end = microtime (true);
+
 ?>
 
 <div class="container-fluid">
@@ -73,6 +77,7 @@ $resultado_ProdutoLimite = mysqli_query($con, $result_ProdutoLimite);
 <?php 
 if ($_SESSION['idLocal']!=0) {
 while($rows_ProdutoLimiteFuncionario = mysqli_fetch_assoc($resultado_ProdutoLimiteFuncionario)){ 
+ 
         ?>
 
           <tr>
@@ -86,7 +91,9 @@ while($rows_ProdutoLimiteFuncionario = mysqli_fetch_assoc($resultado_ProdutoLimi
           </tr>
           <?php } 
           } else { 
+           
             while($rows_ProdutoLimite = mysqli_fetch_assoc($resultado_ProdutoLimite)){ 
+              
               ?>
       
                 <tr>

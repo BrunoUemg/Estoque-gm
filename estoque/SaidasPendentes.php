@@ -18,7 +18,7 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
              <form action="FinalizarRequisicao.php" method="POST" enctype="multipart/form-data">
               <div class="table-responsive">
              
-                <table class="table table-bordered" id="" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="basic-datatables" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                      
@@ -46,7 +46,7 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
                     <td><?php echo $rows_consultaRequisicao['solicitante']; ?></td>
                   
 <td class="d-flex justify-content-center align-items-center">
-<?php echo "<a class='btn btn-primary' title='Informações' href='SaidasPendentes.php?idRequisicao=".$rows_consultaRequisicao['idRequisicao'] ."' data-toggle='modal' data-target='#finalizar".$rows_consultaRequisicao['idRequisicao']."'>" ?>Informações<?php echo "</a>"; ?>
+<?php// echo "<a class='btn btn-primary' title='Informações' href='SaidasPendentes.php?idRequisicao=".$rows_consultaRequisicao['idRequisicao'] ."' data-toggle='modal' data-target='#finalizar".$rows_consultaRequisicao['idRequisicao']."'>" ?><!--Informações--><?php //echo "</a>"; ?>
      <?php  echo "<a class='btn btn-success'  href='DadosRequisicao.php?idRequisicao=" .$rows_consultaRequisicao['idRequisicao'] .  "'>Editar</a>";  ?>
     
     
@@ -63,8 +63,8 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
 
 
 
-    
-    <div class="modal fade" id="finalizar<?php echo $rows_consultaRequisicao['idRequisicao']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <!-- 
+    <div class="modal fade" id="finalizar<?php //echo $rows_consultaRequisicao['idRequisicao']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -77,17 +77,17 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
         
 
         <?php 
-        $result_listaRequisicao = "SELECT P.descricaoProduto,L.quantidade FROM listarequisicao L INNER JOIN produto P ON P.idProduto = L.idProduto 
+        /*$result_listaRequisicao = "SELECT P.descricaoProduto,L.quantidade FROM listarequisicao L INNER JOIN produto P ON P.idProduto = L.idProduto 
         INNER JOIN requisicao R ON R.idRequisicao = L.idRequisicao WHERE R.status = 0 and R.idRequisicao = '$rows_consultaRequisicao[idRequisicao]' ";
-        $resultado_listaRequisicao = mysqli_query($con, $result_listaRequisicao);
+        $resultado_listaRequisicao = mysqli_query($con, $result_listaRequisicao);*/
         ?>
 
-        <input type="text" hidden name="idRequisicao"  class="form-control" value="<?php echo $rows_consultaRequisicao['idRequisicao'];?>">
+        <input type="text" hidden name="idRequisicao"  class="form-control" value="<?php //echo $rows_consultaRequisicao['idRequisicao'];?>">
                    
         <label>Justificativa</label>
-       <input type="text" readOnly name="Justificativa" class="form-control" id="" value="<?php echo $rows_consultaRequisicao['justificativa'] ?>">
+       <input type="text" readOnly name="Justificativa" class="form-control" id="" value="<?php //echo $rows_consultaRequisicao['justificativa'] ?>">
        <label for="">Solicitante</label>
-       <input type="text" readOnly name="quantidade" class="form-control" id="" value="<?php echo $rows_consultaRequisicao['solicitante'] ?>">
+       <input type="text" readOnly name="quantidade" class="form-control" id="" value="<?php //echo $rows_consultaRequisicao['solicitante'] ?>">
 
        
          <label for=""></label>    
@@ -95,26 +95,26 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
       
          <div class="row">  
               
-        <?php while($rows_listarequisicao = mysqli_fetch_assoc($resultado_listaRequisicao)){ ?>
+        <?php //while($rows_listarequisicao = mysqli_fetch_assoc($resultado_listaRequisicao)){ ?>
         
 
 
-        <input type="text" readOnly class="form-control col-md-7 col-xs-12" name="descricaoProduto" id="" value=" <?php echo $rows_listarequisicao['descricaoProduto'];  ?>">
+        <input type="text" readOnly class="form-control col-md-7 col-xs-12" name="descricaoProduto" id="" value=" <?php //echo $rows_listarequisicao['descricaoProduto'];  ?>">
         <br>
-        <input type="text" readOnly class="form-control col-md-5 col-xs-12" name="quantidade" id="" value=" <?php echo $rows_listarequisicao['quantidade'];  ?>">
+        <input type="text" readOnly class="form-control col-md-5 col-xs-12" name="quantidade" id="" value=" <?php //echo $rows_listarequisicao['quantidade'];  ?>">
           <br>
        
       
 
        <?php 
     
-      }
+     // }
       
      
       ?>             
        </div>  
        <br>
-       <a href="../requisicao/<?php echo $rows_consultaRequisicao['comprovanteRequisicao']?>" class='btn btn-primary' target="_blank" rel="noopener noreferrer">Visualizar comprovante</a>
+       <a href="../requisicao/<?php //echo $rows_consultaRequisicao['comprovanteRequisicao']?>" class='btn btn-primary' target="_blank" rel="noopener noreferrer">Visualizar comprovante</a>
       
       
         </div>
@@ -127,7 +127,7 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
       </div>
     </div>
   </div>
-</td>
+    -->
 	
     </tr>
                   <?php 
@@ -220,35 +220,42 @@ function selecionar() {
 
 
 
-<script type="text/javascript">
-        $(document).ready(function() {
-    $('#dataTable').DataTable( {
+<script>
+    $(document).ready(function() {
+      $('#basic-datatables').DataTable({
+        columnDefs: [
+        { targets: 4, orderable: false }
+                  ],
+        lengthMenu: [
+                        [10, 25, 50, -1],
+                        ['10 linhas', '25 linhas', '50 linhas', 'Mostrar tudo']
+                    ],
         "language": {
-    "sEmptyTable": "Nenhum registro encontrado",
-    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-    "sInfoPostFix": "",
-    "sInfoThousands": ".",
-    "sLengthMenu": "_MENU_ resultados por página",
-    "sLoadingRecords": "Carregando...",
-    "sProcessing": "Processando...",
-    "sZeroRecords": "Nenhum registro encontrado",
-    "sSearch": "Pesquisar",
-    "oPaginate": {
-        "sNext": "Próximo",
-        "sPrevious": "Anterior",
-        "sFirst": "Primeiro",
-        "sLast": "Último"
-    },
-    "oAria": {
-        "sSortAscending": ": Ordenar colunas de forma ascendente",
-        "sSortDescending": ": Ordenar colunas de forma descendente"
-    }
-}
-    } );
-} );
-</script>
+          "sEmptyTable": "Nenhum registro encontrado",
+          "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+          "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+          "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+          "sInfoPostFix": "",
+          "sInfoThousands": ".",
+          "sLengthMenu": "_MENU_ resultados por página",
+          "sLoadingRecords": "Carregando...",
+          "sProcessing": "Processando...",
+          "sZeroRecords": "Nenhum registro encontrado",
+          "sSearch": "Pesquisar",
+          "oPaginate": {
+            "sNext": "Próximo",
+            "sPrevious": "Anterior",
+            "sFirst": "Primeiro",
+            "sLast": "Último"
+          },
+          "oAria": {
+            "sSortAscending": ": Ordenar colunas de forma ascendente",
+            "sSortDescending": ": Ordenar colunas de forma descendente"
+          }
+        }
+      });
+    });
+  </script>
 
 
 </body>
