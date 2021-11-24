@@ -27,7 +27,7 @@ $resultado_consultaFiscal = mysqli_query($con, $result_consultaFiscal);
                       <th>Local</th>
                       <th>Produto</th>
                       <th>Ações</th>
-                      <th><input type="checkBox" onclick="selecionar()" class="form-control"  name="" id="adi"></th>
+                      <th style="width: 40px;"><input type="checkBox" onclick="selecionar()" class="form-control"  name="" id="adi"></th>
                     </tr>
                   </thead>
                 
