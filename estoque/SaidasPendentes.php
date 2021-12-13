@@ -44,7 +44,7 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
                     echo $dataBr; ?></td>
                 <td><?php echo $rows_consultaRequisicao['solicitante']; ?></td>
                 <td class="d-flex justify-content-center align-items-center">
-                  <?php echo "<a class='btn btn-primary' target='_blank' title='Informações' href='informacoesRequisicoes.php?idRequisicao=" . $rows_consultaRequisicao['idRequisicao'] . "'>Informações</a>"; ?>
+                  <?php echo "<a class='btn btn-primary' title='Informações' href='informacoesRequisicoes.php?idRequisicao=" . $rows_consultaRequisicao['idRequisicao'] . "'>Informações</a>"; ?>
                   <?php echo "<a class='btn btn-success'  href='DadosRequisicao.php?idRequisicao=" . $rows_consultaRequisicao['idRequisicao'] .  "'>Editar</a>";  ?>
                   <?php if ($_SESSION['nomeUsuario'] != 'Financeiro' && $_SESSION['idLocal'] == 0) {
                     echo "<a class='btn btn-danger' href='ExcluirRequisicao.php?idRequisicao=" . $rows_consultaRequisicao['idRequisicao'] . "'onclick=\"return confirm('Tem certeza que deseja deletar essa requisição?');\"> Excluir</a>";
