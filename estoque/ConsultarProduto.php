@@ -238,7 +238,7 @@ while($rows_ProdutoLimiteFuncionario = mysqli_fetch_assoc($resultado_ProdutoLimi
 
         <input type="number" class="form-control" name="quantidadeEntrada" min="1">
 
-         <label for="">Valor</label>         
+         <label for="">Valor unitário</label>         
          <input onKeyPress="return(moeda(this,'','.',event))" type="text" class="form-control" name="valor" min="1" >
 
         </div>

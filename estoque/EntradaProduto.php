@@ -31,7 +31,7 @@ if (isset($_POST['idProduto']))
   $_SESSION['carrinho2'][$idProduto]['idFornecedor']= $idFornecedor;
 
 
-
+  echo "<script>window.location='ConsultarProduto.php'</script>";
 }
 
 
