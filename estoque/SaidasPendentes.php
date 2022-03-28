@@ -5,7 +5,7 @@ include_once("Head.php");
 
 <?php
 include_once "../dao/conexao.php";
-$result_consultaRequisicao = "SELECT * FROM requisicao where status = 0 ";
+$result_consultaRequisicao = "SELECT *,SUM(L.quantidade) as 'quantidade' FROM requisicao R INNER JOIN listarequisicao L ON L.idRequisicao = R.idRequisicao where R.status = 0 group by R.idRequisicao ";
 $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
 ?>
 <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -23,6 +23,7 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
             <tr>
               <th>Código</th>
               <th>Justificativa</th>
+              <th>Quantidade</th>
               <th>Data</th>
               <th>Solicitante</th>
               <th>Ações</th>
@@ -39,6 +40,7 @@ $resultado_consultaRequisicao = mysqli_query($con, $result_consultaRequisicao);
               <tr>
                 <td><?php echo $rows_consultaRequisicao['codigo']; ?></td>
                 <td><?php echo $rows_consultaRequisicao['justificativa']; ?></td>
+                <td><?php echo $rows_consultaRequisicao['quantidade']; ?></td>
                 <td><?php $dataBanco = $rows_consultaRequisicao['data'];
                     $dataBr = date("d/m/Y", strtotime($dataBanco));
                     echo $dataBr; ?></td>
