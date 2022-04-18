@@ -9,10 +9,9 @@ include_once "../dao/conexao.php";
 $result_consultaFuncionario="SELECT U.idUsuario,
 U.nomeUsuario,
 U.userAcesso,
-L.nomeLocal,
 U.idLocal 
-from usuario U, local L
-where U.idLocal = L.idLocal and U.status = 1";
+from usuario U
+where U.status = 1";
 $resultado_consultaFuncionario = mysqli_query($con, $result_consultaFuncionario);
 ?>
  <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -28,7 +27,7 @@ $resultado_consultaFuncionario = mysqli_query($con, $result_consultaFuncionario)
                     <tr>
                       <th>Nome</th>
                       <th>Usuário</th>
-                      <th>Local de serviço</th>
+                     
                       <th>Ações</th>
                    
                     </tr>
@@ -40,8 +39,7 @@ $resultado_consultaFuncionario = mysqli_query($con, $result_consultaFuncionario)
                     <tr>
                     <td><?php echo $rows_consultaFuncionario['nomeUsuario']; ?></td>
                     <td><?php echo $rows_consultaFuncionario['userAcesso']; ?></td>
-                    <td><?php echo $rows_consultaFuncionario['nomeLocal']; ?></td>
-
+                
 	
 <td>
      
