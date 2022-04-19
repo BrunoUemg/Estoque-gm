@@ -16,6 +16,7 @@ $relaRequisicao = $_POST['relaRequisicao'];
 $compFiscal = $_POST['compFiscal'];
 $compRequi = $_POST['compRequi'];
 $relatorioTransferencia = $_POST['relatorioTransferencia'];
+$receberTransferencia = $_POST['receberTransferencia'];
 
 
 
@@ -38,10 +39,10 @@ exit();
 
  $con->query("INSERT INTO `nivel_acesso` (`idNivel`, `cadFornecedor`, `consulFornecedor`, 
  `cadProduto`, `consulProduto`, `entPendente`, `saidaPendente`, `relaFiscal`, `relaLimite`,
-  `relaProEstoque`, `relaRequisicao`, `relaFun`, `compFiscal`, `compRequi`, `idUsuario`, `master`, relatorioTransferencia)
+  `relaProEstoque`, `relaRequisicao`, `relaFun`, `compFiscal`, `compRequi`, `idUsuario`, `master`, relatorioTransferencia, receberTransferencia)
    VALUES (NULL, '$cadFornecedor', '$consulFornecedor', '$cadProduto', '$consulProduto', '$entPendente',
 	'$saidaPendente', '$relaFiscal', '$relaLimite', '$relaProEstoque', '$relaRequisicao', '$relaFun', 
-	'$compFiscal', '$compRequi', '$idUsuario', '0', '$relatorioTransferencia')");
+	'$compFiscal', '$compRequi', '$idUsuario', '0', '$relatorioTransferencia', '$receberTransferencia')");
 
 
 

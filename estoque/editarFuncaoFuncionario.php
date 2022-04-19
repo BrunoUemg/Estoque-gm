@@ -135,6 +135,14 @@ $linha2 = mysqli_fetch_array($resultado_acesso);
                 <input type="checkbox" name="relatorioTransferencia" <?php if ($linha2['relatorioTransferencia'] == 1) echo 'checked' ?> value="1" id="">
               </td>
             </tr>
+            <tr>
+              <td>
+                <label for="">Receber Transferência</label>
+              </td>
+              <td>
+                <input type="checkbox" name="receberTransferencia" <?php if ($linha2['receberTransferencia'] == 1) echo 'checked' ?> value="1" id="">
+              </td>
+            </tr>
             <tbody>
 
 

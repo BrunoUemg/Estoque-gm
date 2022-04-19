@@ -154,6 +154,14 @@ $resultado_local = mysqli_query($con, $result_local);
                 <input type="checkbox" name="relatorioTransferencia" value="1" id="">
               </td>
             </tr>
+            <tr>
+              <td>
+                <label for="">Receber transferência</label>
+              </td>
+              <td>
+                <input type="checkbox" name="receberTransferencia" value="1" id="">
+              </td>
+            </tr>
             <tbody>
 
 

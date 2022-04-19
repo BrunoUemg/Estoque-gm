@@ -14,11 +14,12 @@ $relaRequisicao = $_POST['relaRequisicao'];
 $compFiscal = $_POST['compFiscal'];
 $compRequi = $_POST['compRequi'];
 $relatorioTransferencia = $_POST['relatorioTransferencia'];
+$receberTransferencia = $_POST['receberTransferencia'];
 
 $con->query("UPDATE `nivel_acesso` SET `cadFornecedor`= '$cadFornecedor',`consulFornecedor`='$consulFornecedor',
 `cadProduto`= '$cadProduto',`consulProduto`= '$consulProduto',`relaFiscal`='$relaFiscal',`relaLimite`='$relaLimite',
 `relaProEstoque`='$relaProEstoque',`relaRequisicao`='$relaRequisicao',`compFiscal`='$compFiscal',`compRequi`='$compRequi',
-relatorioTransferencia = '$relatorioTransferencia' WHERE idUsuario = $idUsuario ");
+relatorioTransferencia = '$relatorioTransferencia', receberTransferencia = '$receberTransferencia' WHERE idUsuario = $idUsuario ");
 
  
 $idLocal['idLocal'] = $_POST['idLocal'];

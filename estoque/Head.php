@@ -99,8 +99,10 @@ $linha2 = $res->fetch_assoc();
               <?php }
               if ($linha2['consulProduto'] == 1) { ?>
                 <a class="collapse-item" href="ConsultarProduto.php">Consultar</a>
-              <?php } ?>
-
+              <?php } 
+                if ($linha2['receberTransferencia'] == 1) { ?>
+              <a class="collapse-item" href="ReceberProduto.php">Receber Transferência</a>
+                  <?php } ?>
             </div>
           </div>
         </li>
