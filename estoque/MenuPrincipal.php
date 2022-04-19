@@ -2,6 +2,7 @@
 include_once("Head.php");
 
 ?>
+<?php if($_SESSION['idLocal'] == null){ ?>
      <form action="EnvioCidade.php" method="post">
             <div class="col-lg-6 mb-4">
               <div class="card shadow mb-4">
@@ -29,6 +30,7 @@ include_once("Head.php");
 
 
           </form>
+          <?php } ?>
 
 <?php
 include_once("Footer.php");

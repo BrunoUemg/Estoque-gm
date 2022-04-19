@@ -29,6 +29,9 @@ $resultado_consultaLocal = mysqli_query($con, $result_consultaLocal);
 
         <tbody>
           <?php while ($rows_consultaLocal = mysqli_fetch_assoc($resultado_consultaLocal)) {
+            $select_localusu = mysqli_query($con,"SELECT * FROM local_usuario where idUsuario = '$_SESSION[idUsuario]' and idLocal = '$rows_consultaLocal[idLocal]'");
+
+            if(mysqli_num_rows($select_localusu) > 0 || $_SESSION['idLocal'] == null){
           ?>
             <tr>
               <td><?php echo $rows_consultaLocal['nomeLocal']; ?></td>
@@ -40,7 +43,7 @@ $resultado_consultaLocal = mysqli_query($con, $result_consultaLocal);
 
 
             </tr>
-          <?php } ?>
+          <?php } } ?>
         </tbody>
       </table>
     </div>

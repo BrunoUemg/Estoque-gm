@@ -15,6 +15,8 @@ $relaProEstoque = $_POST['relaProEstoque'];
 $relaRequisicao = $_POST['relaRequisicao'];
 $compFiscal = $_POST['compFiscal'];
 $compRequi = $_POST['compRequi'];
+$relatorioTransferencia = $_POST['relatorioTransferencia'];
+
 
 
 $senhaSegura = password_hash($senha, PASSWORD_DEFAULT);
@@ -27,7 +29,7 @@ if(mysqli_num_rows($sql) > 0){
 exit();
 }else{
 
- !$con->query("INSERT INTO usuario (nomeUsuario,userAcesso,senha, status) VALUES ('$nomeUsuario','$usuario' ,'$senhaSegura', 1)");
+ !$con->query("INSERT INTO usuario (nomeUsuario,userAcesso,senha, status, idLocal) VALUES ('$nomeUsuario','$usuario' ,'$senhaSegura', 1, 1)");
  
  $select_id = mysqli_query($con, "SELECT max(idUsuario) as 'codigo' FROM usuario");
  $result = mysqli_fetch_assoc($select_id);
@@ -36,10 +38,10 @@ exit();
 
  $con->query("INSERT INTO `nivel_acesso` (`idNivel`, `cadFornecedor`, `consulFornecedor`, 
  `cadProduto`, `consulProduto`, `entPendente`, `saidaPendente`, `relaFiscal`, `relaLimite`,
-  `relaProEstoque`, `relaRequisicao`, `relaFun`, `compFiscal`, `compRequi`, `idUsuario`, `master`)
+  `relaProEstoque`, `relaRequisicao`, `relaFun`, `compFiscal`, `compRequi`, `idUsuario`, `master`, relatorioTransferencia)
    VALUES (NULL, '$cadFornecedor', '$consulFornecedor', '$cadProduto', '$consulProduto', '$entPendente',
 	'$saidaPendente', '$relaFiscal', '$relaLimite', '$relaProEstoque', '$relaRequisicao', '$relaFun', 
-	'$compFiscal', '$compRequi', '$idUsuario', '0')");
+	'$compFiscal', '$compRequi', '$idUsuario', '0', '$relatorioTransferencia')");
 
 
 

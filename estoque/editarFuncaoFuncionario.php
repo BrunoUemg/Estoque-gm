@@ -127,6 +127,14 @@ $linha2 = mysqli_fetch_array($resultado_acesso);
                 <input type="checkbox" name="compRequi" <?php if ($linha2['compRequi'] == 1) echo 'checked' ?> value="1" id="">
               </td>
             </tr>
+            <tr>
+              <td>
+                <label for="">Relatório Transferência</label>
+              </td>
+              <td>
+                <input type="checkbox" name="relatorioTransferencia" <?php if ($linha2['relatorioTransferencia'] == 1) echo 'checked' ?> value="1" id="">
+              </td>
+            </tr>
             <tbody>
 
 

@@ -43,37 +43,32 @@ $linha = $res->fetch_assoc();
             <input class="form-control col-md-10 col-xs-12" maxlength="100" name="quantidadeMin" required="required" type="number">
           </div>
         </div>
-        <?php
-        if ($_SESSION['idLocal'] != 0) { ?>
-          <div class="item form-group">
-            <label class="control-label col-md-6 col-sm-3 col-xs-12">Local
-            </label>
-            <div class="col-md-10 col-sm-6 col-xs-12">
-              <input type="text" class="form-control col-md-10 col-xs-12" disabled value="<?php echo $linha['nomeLocal']; ?>">
-              <input type="text" hidden name="local" value="<?php echo $linha['idLocal']; ?>">
 
 
-            </div>
-          </div>
-        <?php } else if ($_SESSION['idLocal'] == 0) { ?>
-          <div class="item form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="local">Local
-            </label>
-            <div class="col-md-8 col-sm-6 col-xs-12">
-              <select class="form-control" id=selectTipoPerfil name="local" required="required">
 
-                <option>Selecione o local</option>
-                <?php while ($rows_local = mysqli_fetch_assoc($resultado_local)) { ?>
+        <div class="item form-group">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="local">Local
+          </label>
+          <div class="col-md-8 col-sm-6 col-xs-12">
+            <select class="form-control" id=selectTipoPerfil name="local" required="required">
+
+              <option>Selecione o local</option>
+              <?php while ($rows_local = mysqli_fetch_assoc($resultado_local)) {
+                $select_localusu = mysqli_query($con, "SELECT * FROM local_usuario where idUsuario = '$_SESSION[idUsuario]' and idLocal = '$rows_local[idLocal]'");
+
+                if (mysqli_num_rows($select_localusu) > 0 || $_SESSION['idLocal'] == null) {
+              ?>
 
                   <option value="<?php echo $rows_local['idLocal']; ?>"><?php echo ($rows_local['nomeLocal']); ?></option>
 
-                <?php } ?>
+              <?php }
+              } ?>
 
-              </select>
-            </div>
+            </select>
           </div>
+        </div>
 
-        <?php } ?>
+
 
 
 

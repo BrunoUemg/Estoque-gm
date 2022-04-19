@@ -6,20 +6,13 @@ include_once("Head.php");
 $result_consultaProduto="SELECT P.idProduto,
 P.descricaoProduto, 
 P.quantidadeProduto ,
+P.idLocal,
 L.nomeLocal 
 FROM produto P, local L 
 WHERE P.idLocal = L.idLocal  ";
 $resultado_consultaProduto = mysqli_query($con, $result_consultaProduto);
 
 
-$result_consultaProdutoFuncionario="SELECT P.idProduto,
-P.descricaoProduto, 
-P.quantidadeProduto ,
-P.quantidadeMin,
-L.nomeLocal 
-FROM produto P, local L 
-WHERE P.idLocal = '$_SESSION[idLocal]' and P.idLocal = L.idLocal ";
-$resultado_consultaProdutoFuncionario = mysqli_query($con, $result_consultaProdutoFuncionario);
 
 ?>
 
@@ -47,26 +40,19 @@ $resultado_consultaProdutoFuncionario = mysqli_query($con, $result_consultaProdu
         </thead>
         
         <tbody>
-        <?php if ($_SESSION['idLocal']==0) {
+        <?php 
        while($rows_consultaProduto = mysqli_fetch_assoc($resultado_consultaProduto)){ 
+        $select_localusu = mysqli_query($con,"SELECT * FROM local_usuario where idUsuario = '$_SESSION[idUsuario]' and idLocal = '$rows_consultaProduto[idLocal]'");
+
+        if(mysqli_num_rows($select_localusu) > 0 || $_SESSION['idLocal'] == null){
         ?>
           <tr>
           <td><?php echo $rows_consultaProduto['descricaoProduto'];?></td>
           <td><?php echo $rows_consultaProduto['quantidadeProduto'];?></td>
           <td><?php echo $rows_consultaProduto['nomeLocal'];?></td>
           </tr>
-          <?php } 
-        } else if ($_SESSION['idLocal']!=0) {
-          while($rows_consultaProdutoFuncionario = mysqli_fetch_assoc($resultado_consultaProdutoFuncionario)){ 
-            ?>
-    
-              <tr>
-              <td><?php echo $rows_consultaProdutoFuncionario['descricaoProduto'];?></td>
-              <td><?php echo $rows_consultaProdutoFuncionario['quantidadeProduto'];?></td>
-              <td><?php echo $rows_consultaProdutoFuncionario['nomeLocal'];?></td>
-           </tr>
-           <?php } 
-        } ?> 
+          <?php } } ?>
+      
         </tbody>
       </table>
     </div>

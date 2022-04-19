@@ -1,12 +1,17 @@
 <?php
+
 include_once("Head.php");
-
-?>
-
-<?php
 include_once "../dao/conexao.php";
-$result_consultaProduto = "SELECT * FROM produto ";
+$result_consultaProduto = "SELECT  * FROM transferencia T 
+INNER JOIN itens_transferencia I ON I.idTransferencia = T.idTransferencia 
+INNER JOIN produto P ON P.idProduto = I.idProduto
+INNER JOIN local L ON L.idLocal = T.idLocal_destino
+INNER JOIN usuario U ON U.idUsuario = T.idUsuario 
+WHERE T.status = 0 group by T.idTransferencia";
 $resultado_Produto = mysqli_query($con, $result_consultaProduto);
+setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+date_default_timezone_set('America/Sao_Paulo');
+
 ?>
 <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <div class="card shadow mb-4">
@@ -16,102 +21,134 @@ $resultado_Produto = mysqli_query($con, $result_consultaProduto);
             <center>
     </div>
     <div class="card-body">
-        <form action="FinalizarRequisicao.php" method="POST" enctype="multipart/form-data">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="basic-datatables" width="100%" cellspacing="0">
-                    <thead>
+        <?php
+        if (!empty($_SESSION['msg'])) {
+            echo $_SESSION['msg'];
+            unset($_SESSION['msg']);
+        } ?>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="basic-datatables" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Horário</th>
+                        <th>Situação</th>
+                        <th>Destino</th>
+                        <th>Cedente</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php
+
+                    $cont = 1;
+                    while ($rows_consultaProduto = mysqli_fetch_assoc($resultado_Produto)) {
+                        $select_localusu = mysqli_query($con,"SELECT * FROM local_usuario where idUsuario = '$_SESSION[idUsuario]' and idLocal = '$rows_consultaProduto[idLocal_destino]'");
+
+                        if(mysqli_num_rows($select_localusu) > 0 || $_SESSION['idLocal'] == null){
+                    ?>
                         <tr>
-                            <th>Data</th>
-                            <th>Horário</th>
-                            <th>Origem</th>
-                            <th>Cedente</th>
-                            <th>Ações</th>
+                            <td><?php echo date("d/m/Y", strtotime($rows_consultaProduto['dataTransferencia'])); ?></td>
+                            <td><?php echo $rows_consultaProduto['horaTransferencia']; ?></td>
+                            <td><?php echo $rows_consultaProduto['situacao']; ?></td>
+                            <td><?php echo $rows_consultaProduto['nomeLocal'] ?></td>
+                            <td><?php echo $rows_consultaProduto['nomeUsuario'] ?></td>
+                            <td>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#visualizarTransferencia<?php echo $rows_consultaProduto['idProduto'] ?>">Visualizar</button>
+                            </td>
                         </tr>
-                    </thead>
-
-                    <tbody>
                         <?php
+                        $cont += 1; ?>
 
-                        $cont = 1;
-                        while ($rows_consultaProduto = mysqli_fetch_assoc($resultado_Produto)) {
-                        ?>
-                            <tr>
-                                <td><?php echo $rows_consultaProduto['descricaoProduto']; ?></td>
-                                <td><?php echo $rows_consultaProduto['quantidadeProduto']; ?></td>
-                                <td><?php echo 'Origem' ?></td>
-                                <td><?php echo 'Cedente' ?></td>
-                                <td>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#visualizarTransferencia<?php echo $rows_consultaProduto['idProduto'] ?>">Visualizar</button>
-                                </td>
-                            </tr>
-                            <?php
-                            $cont += 1; ?>
-
-                            <!-- MODAL PARA VISUALIZAR LISTA DE PRODUTOS--->
-                            <div class="modal fade" id="visualizarTransferencia<?php echo $rows_consultaProduto['idProduto'] ?>" tabindex="-1" role="dialog" aria-labelledby="visualizarTransferencia" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Informações dos Produtos</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                       
-
-                                      
-                                        </div>
-                                        <div class="modal-footer">
-                                            <input type="submit" value="Aprovar" class="btn btn-success">
-                                            <input type="submit" value="Recusar" class="btn btn-danger">
-                                        </div>
+                        <!-- MODAL PARA VISUALIZAR LISTA DE PRODUTOS--->
+                        <div class="modal fade" id="visualizarTransferencia<?php echo $rows_consultaProduto['idProduto'] ?>" tabindex="-1" role="dialog" aria-labelledby="visualizarTransferencia" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Informações dos Produtos</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
+                                    <div class="modal-body">
+                                        <form action="EnvioFinalizarTransferencia.php" method="POST" enctype="multipart/form-data">
+                                            <ul class="list-group">
+                                                <li class="d-flex justify-content-center align-items-center list-group-item active"><?php echo strftime('%d de %B de %Y', strtotime($rows_consultaProduto['dataTransferencia']))   ?> - <?php echo date('H:i', strtotime($rows_consultaProduto['horaTransferencia'])) ?></li>
+                                                <?php
+                                                $selectItensProduto = mysqli_query($con, "SELECT P.descricaoProduto, I.quantidade, P.idProduto FROM itens_transferencia I 
+                                                INNER JOIN produto P ON P.idProduto = I.idProduto  
+                                                WHERE I.idTransferencia = '$rows_consultaProduto[idTransferencia]' order by P.descricaoProduto asc");
+
+                                                while ($rowsItensProduto = mysqli_fetch_assoc($selectItensProduto)) { ?>
+                                                    <li class="list-group-item"><?php echo $rowsItensProduto['descricaoProduto'] ?>
+                                                        <span class="badge badge-primary badge-pill"><?php echo $rowsItensProduto['quantidade'] ?></span>
+                                                    </li>
+                                                    <!-- INPUTS PARA O POST -->
+                                                    <input type="text" hidden readonly name="descricaoProduto[]" value="<?php echo $rowsItensProduto['descricaoProduto'] ?>">
+                                                    <input type="text" hidden readonly name="quantidade[]" value="<?php echo $rowsItensProduto['quantidade'] ?>">
+                                                    <input type="text" hidden readonly name="idProduto[]" value="<?php echo $rowsItensProduto['idProduto'] ?>">
+                                                <?php } ?>
+                                                <input type="text" hidden readonly name="idTransferencia" value="<?php echo $rows_consultaProduto['idTransferencia'] ?>">
+                                                <input type="text" hidden readonly name="idLocal_destino" value="<?php echo $rows_consultaProduto['idLocal_destino'] ?>">
+                                                <li class="d-flex justify-content-center align-items-center list-group-item active">Solicitante: <?php echo $rows_consultaProduto['solicitante'] ?></li>
+                                            </ul>
+
+                                            <ul class="list-group mt-3">
+                                                <li class="d-flex justify-content-center align-items-center list-group-item active">Outras Informações</li>
+                                                <li class="list-group-item">Destino: <?php echo $rows_consultaProduto['nomeLocal'] ?></li>
+                                                <li class="list-group-item">Justificativa: <?php echo $rows_consultaProduto['justificativa'] ?></li>
+                                                <li class="d-flex justify-content-center align-items-center list-group-item active"></li>
+                                            </ul>
+
+                                            <div class="form-group mt-3">
+                                                <label for="">Senha de validação</label>
+                                                <input type="password" name="senha_validacao" required="required" class="form-control" id="">
+                                                </center> <br>
+                                            </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="submit" value="Aprovar" name="salvar" class="btn btn-success">
+                                        <input type="submit" value="Recusar" name="salvar" class="btn btn-danger">
+                                    </div>
+                                    </form>
                                 </div>
                             </div>
+                        </div>
 
 
-                        <?php
-                        }
-                        $cont -= 1;
-                        ?>
-                    </tbody>
-                </table>
+                    <?php
+                    } }
+                    $cont -= 1;
+                    ?>
+                </tbody>
+            </table>
 
-
-                <center>
-                    <label for="">Senha de validação</label>
-                    <input type="password" name="senha_validacao" required="required" class="form-control  col-md-5 col-xs-12" id="">
-                </center> <br>
-                <center>
-                    <input type='submit' name='button' value='Finalizar requisição' class="btn btn-success">
-                </center>
-        </form>
+        </div>
     </div>
-</div>
 
-<script>
-    function selecionar() {
+    <script>
+        function selecionar() {
 
-        if (document.getElementById("adi").checked == true) {
-            var cont2 = 1;
-            var cont = <?php echo $cont; ?>;
-            for (cont2; cont2 <= cont; cont2++) {
-                document.getElementById(cont2).checked = true;
-                document.getElementById(cont2).checked = true;
+            if (document.getElementById("adi").checked == true) {
+                var cont2 = 1;
+                var cont = <?php echo $cont; ?>;
+                for (cont2; cont2 <= cont; cont2++) {
+                    document.getElementById(cont2).checked = true;
+                    document.getElementById(cont2).checked = true;
+                }
             }
-        }
-        if (document.getElementById("adi").checked == false) {
-            var cont2 = 1;
-            var cont = <?php echo $cont; ?>;
-            for (cont2; cont2 <= cont; cont2++) {
-                document.getElementById(cont2).checked = false;
-                document.getElementById(cont2).checked = false;
+            if (document.getElementById("adi").checked == false) {
+                var cont2 = 1;
+                var cont = <?php echo $cont; ?>;
+                for (cont2; cont2 <= cont; cont2++) {
+                    document.getElementById(cont2).checked = false;
+                    document.getElementById(cont2).checked = false;
+                }
             }
-        }
 
-    }
-</script>
+        }
+    </script>
 
 
 </div>

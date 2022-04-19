@@ -3,19 +3,13 @@ include_once("../dao/conexao.php");
 
 include_once("Head.php");
 
-$result_ProdutoLimiteFuncionario="SELECT P.idProduto,
-P.descricaoProduto, 
-P.quantidadeProduto,
-P.quantidadeMin,
-L.nomeLocal
-FROM produto P, local L 
-WHERE quantidadeProduto <= quantidadeMin and P.idLocal = L.idLocal and P.idLocal = '$_SESSION[idLocal]'";
-$resultado_ProdutoLimiteFuncionario = mysqli_query($con, $result_ProdutoLimiteFuncionario);
+
 
 $result_ProdutoLimite="SELECT P.idProduto,
 P.descricaoProduto, 
 P.quantidadeProduto,
 P.quantidadeMin,
+P.idLocal,
 L.nomeLocal
 FROM produto P, local L
 WHERE quantidadeProduto <= quantidadeMin and P.idLocal = L.idLocal ";
@@ -48,8 +42,12 @@ $resultado_ProdutoLimite = mysqli_query($con, $result_ProdutoLimite);
         </thead>
         
         <tbody>
-        <?php if ($_SESSION['idLocal']==0) {
+        <?php 
        while($rows_consultaProdutoLimite = mysqli_fetch_assoc($resultado_ProdutoLimite)){ 
+        $select_localusu = mysqli_query($con,"SELECT * FROM local_usuario where idUsuario = '$_SESSION[idUsuario]' and idLocal = '$rows_consultaProdutoLimite[idLocal]'");
+
+        if(mysqli_num_rows($select_localusu) > 0 || $_SESSION['idLocal'] == null){
+
         ?>
           <tr>
           <td><?php echo $rows_consultaProdutoLimite['descricaoProduto'];?></td>
@@ -57,19 +55,8 @@ $resultado_ProdutoLimite = mysqli_query($con, $result_ProdutoLimite);
           <td><?php echo $rows_consultaProdutoLimite['quantidadeMin'];?></td>
           <td><?php echo $rows_consultaProdutoLimite['nomeLocal'];?></td>
           </tr>
-          <?php } 
-        } else if ($_SESSION['idLocal']!=0) {
-          while($rows_consultaProdutoFuncionario = mysqli_fetch_assoc($resultado_ProdutoLimiteFuncionario)){ 
-            ?>
-    
-              <tr>
-              <td><?php echo $rows_consultaProdutoFuncionario['descricaoProduto'];?></td>
-              <td><?php echo $rows_consultaProdutoFuncionario['quantidadeProduto'];?></td>
-              <td><?php echo $rows_consultaProdutoFuncionario['quantidadeMin'];?></td>
-              <td><?php echo $rows_consultaProdutoFuncionario['nomeLocal'];?></td>
-           </tr>
-           <?php } 
-        } ?> 
+          <?php } } ?>
+       
         </tbody>
       </table>
     </div>

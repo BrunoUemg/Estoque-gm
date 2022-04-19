@@ -189,8 +189,7 @@ $linha2 = $res->fetch_assoc();
   <div class="bg-white py-2 collapse-inner rounded">
     <a class="collapse-item" href="CadastrarProduto.php">Cadastrar</a>
     <a class="collapse-item" href="ConsultarProduto.php">Consultar</a>
-    <a class="collapse-item" href="TransferirProduto.php">Transferir</a>
-    <a class="collapse-item" href="ReceberProduto.php">Receber</a>
+    <a class="collapse-item" href="ReceberProduto.php">Receber Transferência</a>
     <a class="collapse-item" href="EntradasPendentes.php">Entradas Pendentes</a>
     <a class="collapse-item" href="SaidasPendentes.php">Saídas Pendentes</a>
   </div>
@@ -240,6 +239,7 @@ $linha2 = $res->fetch_assoc();
     <a class="collapse-item" href="RelatorioNotaFiscal.php">Nota Fiscal</a>
     <a class="collapse-item" href="RelatorioRequisicao.php">Requisição</a>
     <a class="collapse-item" href="RelatorioFuncionario.php">Funcionário</a>
+    <a class="collapse-item" href="RelatorioTransferencia.php">Transferência</a>
 
   </div>
 </div>
@@ -293,6 +293,11 @@ $linha2 = $res->fetch_assoc();
           <ul class="navbar-nav ml-auto">
 
             <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="FinalizarTransferencia.php">Transferência
+                 <i class="fa-solid fa-arrow-right-arrow-left text-gray-600"></i>
+              </a>
+            </li>
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="EntradaProduto.php">Entrada
                 <i class="fas fa-dolly text-gray-600" title="Entre no Carinho"></i>
@@ -413,7 +418,7 @@ $linha2 = $res->fetch_assoc();
             </div>
           </div>
         </div>
-
+        <script src="https://kit.fontawesome.com/2477a48321.js" crossorigin="anonymous"></script>
 
 
 
@@ -421,5 +426,3 @@ $linha2 = $res->fetch_assoc();
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
-     

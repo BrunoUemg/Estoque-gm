@@ -43,8 +43,11 @@ $resultado_consultaProduto = mysqli_query($con, $result_consultaProduto);
         </thead>
         
         <tbody>
-        <?php if ($_SESSION['idLocal']==0) {
-       while($rows_consultaProduto = mysqli_fetch_assoc($resultado_consultaProduto)){ 
+        <?php 
+       while($rows_consultaProduto = mysqli_fetch_assoc($resultado_consultaProduto)){
+        $select_localusu = mysqli_query($con,"SELECT * FROM local_usuario where idUsuario = '$_SESSION[idUsuario]' and idLocal = '$rows_local[idLocal]'");
+
+        if(mysqli_num_rows($select_localusu) > 0 || $_SESSION['idLocal'] == null){ 
         ?>
           <tr>
           <td><?php echo $rows_consultaProduto['descricaoProduto'];?></td>
@@ -55,18 +58,9 @@ $resultado_consultaProduto = mysqli_query($con, $result_consultaProduto);
           <td><?php echo $rows_consultaProduto['valor'];?></td>
           <td><?php echo $rows_consultaProduto['nomeUsuario'];?></td>
           </tr>
-          <?php } 
-        } else if ($_SESSION['idLocal']!=0) {
-          while($rows_consultaProdutoFuncionario = mysqli_fetch_assoc($resultado_consultaProdutoFuncionario)){ 
-            ?>
-    
-              <tr>
-              <td><?php echo $rows_consultaProdutoFuncionario['descricaoProduto'];?></td>
-              <td><?php echo $rows_consultaProdutoFuncionario['quantidadeProduto'];?></td>
-              <td><?php echo $rows_consultaProdutoFuncionario['nomeLocal'];?></td>
-           </tr>
-           <?php } 
-        } ?> 
+          <?php } }
+       
+         ?> 
         </tbody>
       </table>
     </div>

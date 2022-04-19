@@ -97,4 +97,3 @@ if ($con->query($sql) === TRUE)
         echo "Erro para inserir: " . $con->error; 
     
    $con->close();
-?>

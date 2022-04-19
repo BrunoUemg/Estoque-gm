@@ -13,13 +13,24 @@ $relaProEstoque = $_POST['relaProEstoque'];
 $relaRequisicao = $_POST['relaRequisicao'];
 $compFiscal = $_POST['compFiscal'];
 $compRequi = $_POST['compRequi'];
+$relatorioTransferencia = $_POST['relatorioTransferencia'];
 
 $con->query("UPDATE `nivel_acesso` SET `cadFornecedor`= '$cadFornecedor',`consulFornecedor`='$consulFornecedor',
 `cadProduto`= '$cadProduto',`consulProduto`= '$consulProduto',`relaFiscal`='$relaFiscal',`relaLimite`='$relaLimite',
-`relaProEstoque`='$relaProEstoque',`relaRequisicao`='$relaRequisicao',`compFiscal`='$compFiscal',`compRequi`='$compRequi'
- WHERE idUsuario = $idUsuario ");
+`relaProEstoque`='$relaProEstoque',`relaRequisicao`='$relaRequisicao',`compFiscal`='$compFiscal',`compRequi`='$compRequi',
+relatorioTransferencia = '$relatorioTransferencia' WHERE idUsuario = $idUsuario ");
 
  
+$idLocal['idLocal'] = $_POST['idLocal'];
+
+$con->query("DELETE FROM local_usuario where idUsuario = '$idUsuario'");
+
+foreach($idLocal['idLocal'] as $idLocal)
+{
+    $con->query("INSERT INTO local_usuario (idLocal,idUsuario)VALUES('$idLocal','$idUsuario')");
+}
+
+
 $_SESSION['msg'] = ' <div class="alert alert-success" role="alert"> <p> Alterado com sucesso! </div> </p> ';
 echo "<script>window.location='editarFuncaoFuncionario.php?idUsuario=$idUsuario'</script>";
 exit();
