@@ -23,7 +23,7 @@ quantidadeProduto,
 idLocal,
 quantidadeMin
 FROM produto  
-WHERE quantidadeProduto <= quantidadeMin  ";
+WHERE quantidadeProduto <= quantidadeMin and tipoEstoque = 0  ";
 $resultado_ProdutoLimite = mysqli_query($con, $result_ProdutoLimite);
 
 

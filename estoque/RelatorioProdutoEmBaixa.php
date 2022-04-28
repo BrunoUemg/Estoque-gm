@@ -12,7 +12,7 @@ P.quantidadeMin,
 P.idLocal,
 L.nomeLocal
 FROM produto P, local L
-WHERE quantidadeProduto <= quantidadeMin and P.idLocal = L.idLocal ";
+WHERE quantidadeProduto <= quantidadeMin and P.idLocal = L.idLocal and P.tipoEstoque = 0 ";
 $resultado_ProdutoLimite = mysqli_query($con, $result_ProdutoLimite);
 
 ?>

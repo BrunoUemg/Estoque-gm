@@ -58,18 +58,33 @@ $resultado_local = mysqli_query($con, $result_local);
             <select class="form-control" id=selectTipoPerfil disabled name="local">
 
               <option>Selecione o local</option>
-              <?php while ($rows_local = mysqli_fetch_assoc($resultado_local)) { 
-                 $select_localusu = mysqli_query($con,"SELECT * FROM local_usuario where idUsuario = '$_SESSION[idUsuario]' and idLocal = '$rows_local[idLocal]'");
+              <?php while ($rows_local = mysqli_fetch_assoc($resultado_local)) {
+                $select_localusu = mysqli_query($con, "SELECT * FROM local_usuario where idUsuario = '$_SESSION[idUsuario]' and idLocal = '$rows_local[idLocal]'");
 
-                 if(mysqli_num_rows($select_localusu) > 0 || $_SESSION['idLocal'] == null){
-                ?>
+                if (mysqli_num_rows($select_localusu) > 0 || $_SESSION['idLocal'] == null) {
+              ?>
 
-                <option value="<?php echo $rows_local['idLocal']; ?>" <?php if ($linha['idLocal'] == $rows_local['idLocal']) {
-                                                                        echo "selected";
-                                                                      } ?>><?php echo ($rows_local['nomeLocal']); ?></option>
+                  <option value="<?php echo $rows_local['idLocal']; ?>" <?php if ($linha['idLocal'] == $rows_local['idLocal']) {
+                                                                          echo "selected";
+                                                                        } ?>><?php echo ($rows_local['nomeLocal']); ?></option>
 
-              <?php } } ?>
+              <?php }
+              } ?>
 
+            </select>
+          </div>
+        </div>
+        <div class="item form-group">
+          <label class="control-label col-md-6 col-sm-3 col-xs-12">Quantidade Minima
+          </label>
+          <div class="col-md-10 col-sm-6 col-xs-12">
+           
+            <select name="tipoEstoque" required class="form-control col-md-10 col-xs-12">
+              <option value="">Selecione</option>
+              <option value="0"<?php if($linha['tipoEstoque'] == 0) echo 'selected' ?>>Possui quantidade minima</option>
+              <option value="1"<?php if($linha['tipoEstoque'] == 1) echo 'selected' ?>>Não possui quantidade minima</option>
+              
+              
             </select>
           </div>
         </div>

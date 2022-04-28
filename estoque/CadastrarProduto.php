@@ -43,6 +43,20 @@ $linha = $res->fetch_assoc();
             <input class="form-control col-md-10 col-xs-12" maxlength="100" name="quantidadeMin" required="required" type="number">
           </div>
         </div>
+        <div class="item form-group">
+          <label class="control-label col-md-6 col-sm-3 col-xs-12">Quantidade Minima
+          </label>
+          <div class="col-md-10 col-sm-6 col-xs-12">
+           
+            <select name="tipoEstoque" required class="form-control col-md-10 col-xs-12">
+              <option value="">Selecione</option>
+              <option value="0">Possui quantidade minima</option>
+              <option value="1">Não possui quantidade minima</option>
+              
+              
+            </select>
+          </div>
+        </div>
 
 
 
