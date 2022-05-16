@@ -50,19 +50,24 @@ $resultado_local = mysqli_query($con, $result_local);
           <h3 class="m-0 font-weight-bold text-primary">Relatório de Nota Fiscal</h3>
         </center>
         <form action="" method="POST" onsubmit="return(verifica())" class="form-horizontal form-label-left">
+        <?php
+            $data_incioInp = mktime(0, 0, 0, date('m'), 1, date('Y'));
 
+            $data_incioInpF = date('Y-m-d', $data_incioInp);
+
+            ?>
           <div class="item form-group">
             <h5>Filtro por período </h5>
             <label class="control-label col-md-6 col-sm-3 col-xs-12" for="nome">Data início
             </label>
             <div class="col-md-10 col-sm-6 col-xs-12">
-              <input type="date" class="form-control col-md-3 col-xs-8" required="required" name="dataInicio">
+              <input type="date" class="form-control col-md-3 col-xs-8" required="required" value="<?php echo $data_incioInpF ?>" name="dataInicio">
               <br>
             </div>
             <label class="control-label col-md-6 col-sm-3 col-xs-12" for="nome">Data final
             </label>
             <div class="col-md-10 col-sm-6 col-xs-12">
-              <input type="date" class="form-control col-md-3 col-xs-8" required="required" name="dataFinal">
+              <input type="date" class="form-control col-md-3 col-xs-8" required="required" value="<?php echo date('Y-m-d'); ?>" name="dataFinal">
               <br>
             </div>
 
