@@ -252,14 +252,8 @@ $resultado_ProdutoLimite = mysqli_query($con, $result_ProdutoLimite);
                               <input type="hidden" class="form-control" name="quantidadeMax" value="<?php echo $rows_consultaProduto['quantidadeProduto']; ?>">
 
                               <input type="hidden" class="form-control" name="idLocal" value="<?php echo $rows_consultaProduto['idLocal']; ?>">
-                              <label for="">Fornecedor</label>
-                              <select name="idFornecedor" required class="form-control col-md-10 col-xs-12" id="">
-                                <?php $select_fornecedor = mysqli_query($con, "SELECT * FROM fornecedor"); ?>
-                                <option value="">Selecione</option>
-                                <?php while ($rows_fornecedor = mysqli_fetch_assoc($select_fornecedor)) { ?>
-                                  <option value="<?php echo $rows_fornecedor['idFornecedor']; ?>"><?php echo $rows_fornecedor['nomeFantasia'] ?></option>
-                                <?php } ?>
-                              </select>
+                             
+                            
                               <label>Quantidade</label>
 
                               <input type="number" class="form-control" name="quantidadeEntrada" min="1">

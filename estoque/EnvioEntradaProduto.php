@@ -3,6 +3,7 @@ include_once "../dao/conexao.php";
 
 
 $numeroNota = $_POST["numeroNota"];
+$idFornecedor = $_POST['idFornecedor'];
 $data = date ("Y-m-d");
 
 session_start();
@@ -31,7 +32,6 @@ session_start();
       $idProduto = $lista['idProduto'];
       $quantidadeEntrada = $lista['quantidadeEntrada'];
       $valor = $lista['valor'];
-      $idFornecedor = $lista['idFornecedor'];
 
       $con->query("INSERT INTO notafiscal (numeroNota,quantidade,dataEntrada,idProduto,comprovanteFiscal,status,valor,idFornecedor,idUsuario)VALUES
       ('$numeroNota','$quantidadeEntrada','$data','$idProduto','$novo_nome1',0,'$valor','$idFornecedor','$_SESSION[idUsuario]')");
