@@ -13,7 +13,7 @@ P.quantidadeMin,
 P.idLocal,
 L.nomeLocal 
 FROM produto P, local L 
-WHERE P.idLocal = L.idLocal  ";
+WHERE P.idLocal = L.idLocal and status = 1  ";
 $resultado_consultaProduto = mysqli_query($con, $result_consultaProduto);
 
 
@@ -23,7 +23,7 @@ quantidadeProduto,
 idLocal,
 quantidadeMin
 FROM produto  
-WHERE quantidadeProduto <= quantidadeMin and tipoEstoque = 0  ";
+WHERE quantidadeProduto <= quantidadeMin and tipoEstoque = 0 and status = 1 ";
 $resultado_ProdutoLimite = mysqli_query($con, $result_ProdutoLimite);
 
 
@@ -138,7 +138,7 @@ $resultado_ProdutoLimite = mysqli_query($con, $result_ProdutoLimite);
                       <?php echo "<a class='btn btn-primary' title='Editar Produto' href='DadosProduto.php?idProduto=" . $rows_consultaProduto['idProduto'] .  "'>" ?><i class='fas fa-edit'></i><?php echo "</a>"; ?>
                       <?php
                       if ($_SESSION['idLocal'] == null) {
-                        echo "<a  class='btn btn-danger' title='Excluir Produto' href='ExcluirProduto.php?idProduto=" . $rows_consultaProduto['idProduto'] . "' onclick=\"return confirm('Tem certeza que deseja deletar esse registro?');\">" ?> <i class='fas fa-trash-alt'></i><?php echo "</a>";
+                        echo "<a  class='btn btn-danger' title='Desativar Produto' href='ExcluirProduto.php?idProduto=" . $rows_consultaProduto['idProduto'] . "' onclick=\"return confirm('Tem certeza que deseja desativar esse registro?');\">" ?> <i class='fas fa-arrow-down'></i><?php echo "</a>";
                                                                                                                                                                                                                                                                               } ?>
                       <?php echo "<a class='btn btn-warning' title='Adicionar Produto no Carrinho' href='ConsultarProduto.php?idProduto=" . $rows_consultaProduto['idProduto'] . "' data-toggle='modal' data-target='#carrinhoModal" . $rows_consultaProduto['idProduto'] . "'>" ?><i class='fas fa-cart-arrow-down'></i><?php echo "</a>"; ?>
                       <?php
@@ -258,7 +258,7 @@ $resultado_ProdutoLimite = mysqli_query($con, $result_ProdutoLimite);
 
                               <input type="number" class="form-control" name="quantidadeEntrada" min="1">
 
-                              <label for="">Valor</label>
+                              <label for="">Valor unitário</label>
                               <input onKeyPress="return(moeda(this,'','.',event))" type="text" class="form-control" name="valor" min="1">
 
                           </div>

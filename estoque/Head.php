@@ -69,6 +69,12 @@ $linha2 = $res->fetch_assoc();
         <a class="nav-link" href="MenuPrincipal.php">
           <i class="fas fa-home"></i>
           <span>Página Inicial</span></a>
+        <div class=" d-flex justify-content-center align-items-center col">
+          <a class="fw-bold text-white nav-link" href="Duvidas.php" role="button" aria-expanded="false" aria-controls="search-nav">
+            Dúvidas
+            <i class="fas fa-question"></i>
+          </a>
+        </div>
       </li>
 
       <!-- Divider -->
@@ -99,10 +105,10 @@ $linha2 = $res->fetch_assoc();
               <?php }
               if ($linha2['consulProduto'] == 1) { ?>
                 <a class="collapse-item" href="ConsultarProduto.php">Consultar</a>
-              <?php } 
-                if ($linha2['receberTransferencia'] == 1) { ?>
-              <a class="collapse-item" href="ReceberProduto.php">Receber Transferência</a>
-                  <?php } ?>
+              <?php }
+              if ($linha2['receberTransferencia'] == 1) { ?>
+                <a class="collapse-item" href="ReceberProduto.php">Receber Transferência</a>
+              <?php } ?>
             </div>
           </div>
         </li>
@@ -167,6 +173,19 @@ $linha2 = $res->fetch_assoc();
 
       <?php }
       if ($_SESSION['nomeUsuario'] != 'Financeiro' && $_SESSION['idLocal'] == 0) {
+        echo  '<li class="nav-item">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#duvidas" aria-expanded="true" aria-controls="duvidas">
+  <i class="fas fa-question"></i>
+  <span>Duvidas</span>
+</a>
+<div id="duvidas" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+  <div class="bg-white py-2 collapse-inner rounded">
+    <a class="collapse-item" href="CadastrarDuvidas.php">Cadastrar</a>
+    <a class="collapse-item" href="ConsultarDuvidas.php">Consultar</a>
+
+  </div>
+</div>
+</li>';
         echo  '<li class="nav-item">
 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
   <i class="fas fa-map-marker-alt"></i>
@@ -297,7 +316,7 @@ $linha2 = $res->fetch_assoc();
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="FinalizarTransferencia.php">Transferência
-                 <i class="fa-solid fa-arrow-right-arrow-left text-gray-600"></i>
+                <i class="fa-solid fa-arrow-right-arrow-left text-gray-600"></i>
               </a>
             </li>
             <li class="nav-item dropdown no-arrow mx-1">
