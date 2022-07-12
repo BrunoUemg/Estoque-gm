@@ -27,8 +27,9 @@ $resultado_consultaFiscal = mysqli_query($con, $result_consultaFiscal);
             <tr>
               <th>Nota fiscal</th>
               <th>Local</th>
+              <th>Quantidade</th>
               <th>Produto</th>
-              <th>quantidade</th>
+           
               <th>Ações</th>
               <th style="width: 40px;"><input type="checkBox" onclick="selecionar()" class="form-control" name="" id="adi"></th>
             </tr>
@@ -47,8 +48,9 @@ $resultado_consultaFiscal = mysqli_query($con, $result_consultaFiscal);
                 <tr>
                   <td><?php echo $rows_consultaFiscal['numeroNota']; ?></td>
                   <td><?php echo $rows_consultaFiscal['nomeLocal']; ?></td>
-                  <td><?php echo $rows_consultaFiscal['descricaoProduto']; ?></td>
                   <td><?php echo $rows_consultaFiscal['quantidade']; ?></td>
+                  <td><?php echo $rows_consultaFiscal['descricaoProduto']; ?></td>
+                  
 
                   <td>
                     <?php echo "<a class='btn btn-primary' title='Finalizar' href='EntradasPendentes.php?idNotaFiscal=" . $rows_consultaFiscal['idNotaFiscal'] . "' data-toggle='modal' data-target='#finalizar" . $rows_consultaFiscal['idNotaFiscal'] . "'>" ?>Visualizar<?php echo "</a>"; ?>
