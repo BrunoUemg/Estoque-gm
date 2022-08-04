@@ -51,14 +51,16 @@ $linha_usuario = $res->fetch_assoc();
             // Utilizando as Páginas
             $pdf->useTemplate($tplIdx);
             //Decidindo a Fonte
-            $pdf->SetFont('Arial', '', 10);
+            $pdf->SetFont('Arial', '', 8);
         }
         /* Assinatura 1 e Continuidade */
         $assinatura = "Documento assinado e inserido por: " . $linha_usuario['nomeUsuario'] . "";
         $assinaturaCont = "User acesso: " . $linha_usuario['userAcesso'] .  " em "  . $data_hoje . " as " . $hora_gerada . "";
+        $assinaturaSis = "Sistema estoque.";
         /* Adicionando Assinatura e Quebrando a Linha*/
-        $pdf->Text(65, 285, $assinatura);
-        $pdf->Text(65, 290, $assinaturaCont);
+        $pdf->Text(8, 285, $assinatura);
+        $pdf->Text(8, 290, $assinaturaCont);
+        $pdf->Text(8, 295, $assinaturaSis);
         /* Setando o nome + extensão */
        
         $doc1 = "comprovanteFiscal_".uniqid().$extensao1;
