@@ -22,19 +22,37 @@ if ($searchValue != '') {
 }
 // select count(*) as allcount from employee
 ## Total number of records without filtering
-$sel = mysqli_query($con, "SELECT count(*) as allcount FROM produto P, local L, local_usuario LU WHERE P.idLocal = L.idLocal and status = 1 and LU.idUsuario = '$_SESSION[idUsuario]' and LU.idLocal = L.idLocal");
-$records = mysqli_fetch_assoc($sel);
-$totalRecords = $records['allcount'];
 
-## Total number of record with filtering
-$sel = mysqli_query($con, "SELECT count(*) as allcount FROM produto P, local L, local_usuario LU WHERE LU.idUsuario = '$_SESSION[idUsuario]' and LU.idLocal = L.idLocal AND P.idLocal = L.idLocal and status = 1 and 1 " . $searchQuery);
-$records = mysqli_fetch_assoc($sel);
-$totalRecordwithFilter = $records['allcount'];
+if ($_SESSION['idLocal'] == null) {
+    $sel = mysqli_query($con, "SELECT count(*) as allcount FROM produto P, local L WHERE P.idLocal = L.idLocal and status = 1");
+    $records = mysqli_fetch_assoc($sel);
 
-## Fetch records
-$empQuery = "SELECT P.idProduto,P.descricaoProduto, P.quantidadeProduto ,P.quantidadeMin,P.idLocal, L.nomeLocal FROM produto P, local L, local_usuario LU WHERE LU.idUsuario = '$_SESSION[idUsuario]' and LU.idLocal = L.idLocal and P.idLocal = L.idLocal and status = 1 and  1 " . $searchQuery . " ORDER BY " . $columnName . " " . $columnSortOrder . " limit " . $row . "," . $rowperpage;
-$empRecords = mysqli_query($con, $empQuery);
-$data = array();
+    ## Total number of record with filtering
+    $sel = mysqli_query($con, "SELECT count(*) as allcount FROM produto P, local L WHERE P.idLocal = L.idLocal and status = 1 and 1 " . $searchQuery);
+    $records = mysqli_fetch_assoc($sel);
+    $totalRecordwithFilter = $records['allcount'];
+
+    ## Fetch records
+    $empQuery = "SELECT P.idProduto,P.descricaoProduto, P.quantidadeProduto ,P.quantidadeMin,P.idLocal, L.nomeLocal FROM produto P, local L WHERE P.idLocal = L.idLocal and status = 1 and  1 " . $searchQuery . " ORDER BY " . $columnName . " " . $columnSortOrder . " limit " . $row . "," . $rowperpage;
+    $empRecords = mysqli_query($con, $empQuery);
+    $data = array();
+
+    $totalRecords = $records['allcount'];
+} else {
+    $sel = mysqli_query($con, "SELECT count(*) as allcount FROM produto P, local L, local_usuario LU WHERE P.idLocal = L.idLocal and status = 1 and LU.idUsuario = '$_SESSION[idUsuario]' and LU.idLocal = L.idLocal");
+    $records = mysqli_fetch_assoc($sel);
+
+    ## Total number of record with filtering
+    $sel = mysqli_query($con, "SELECT count(*) as allcount FROM produto P, local L, local_usuario LU WHERE LU.idUsuario = '$_SESSION[idUsuario]' and LU.idLocal = L.idLocal AND P.idLocal = L.idLocal and status = 1 and 1 " . $searchQuery);
+    $records = mysqli_fetch_assoc($sel);
+    $totalRecordwithFilter = $records['allcount'];
+
+    ## Fetch records
+    $empQuery = "SELECT P.idProduto,P.descricaoProduto, P.quantidadeProduto ,P.quantidadeMin,P.idLocal, L.nomeLocal FROM produto P, local L, local_usuario LU WHERE LU.idUsuario = '$_SESSION[idUsuario]' and LU.idLocal = L.idLocal and P.idLocal = L.idLocal and status = 1 and  1 " . $searchQuery . " ORDER BY " . $columnName . " " . $columnSortOrder . " limit " . $row . "," . $rowperpage;
+    $empRecords = mysqli_query($con, $empQuery);
+    $data = array();
+}
+
 
 while ($rows_consultaProduto = mysqli_fetch_assoc($empRecords)) {
 
