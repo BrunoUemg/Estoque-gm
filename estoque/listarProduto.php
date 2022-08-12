@@ -38,14 +38,17 @@ $data = array();
 
 while ($rows_consultaProduto = mysqli_fetch_assoc($empRecords)) {
 
-    if ($_SESSION["idLocal"] == NULL) {
-        $excluir = '<a  class="btn btn-danger" title="Desativar Produto" href="ExcluirProduto.php?idProduto=' . $rows_consultaProduto["idProduto"] . '" onclick="return confirm(\'Tem certeza que deseja desativar esse registro?\')"><i class="fas fa-arrow-down"></i></a>';
-        $modal = '<a class="btn btn-secondary" title="Informação do produto" href="RelacaoProduto.php?idProduto=' . $rows_consultaProduto["idProduto"] .  '"><i class="fas fa-chart-bar"></i></a>
+    $select_localusu = mysqli_query($con, "SELECT * FROM local_usuario where idUsuario = '$_SESSION[idUsuario]' and idLocal = '$rows_consultaProduto[idLocal]'");
+    if (mysqli_num_rows($select_localusu) > 0 || $_SESSION['idLocal'] == null) {
+
+        if ($_SESSION["idLocal"] == NULL) {
+            $excluir = '<a  class="btn btn-danger" title="Desativar Produto" href="ExcluirProduto.php?idProduto=' . $rows_consultaProduto["idProduto"] . '" onclick="return confirm(\'Tem certeza que deseja desativar esse registro?\')"><i class="fas fa-arrow-down"></i></a>';
+            $modal = '<a class="btn btn-secondary" title="Informação do produto" href="RelacaoProduto.php?idProduto=' . $rows_consultaProduto["idProduto"] .  '"><i class="fas fa-chart-bar"></i></a>
        
         
         ';
-    }
-    $acoes = '
+        }
+        $acoes = '
     <script src="../js/mascaras.js"></script>
     <a class="btn btn-success" title="Adicionar Produto " href="ConsultarProduto.php?idProduto=' . $rows_consultaProduto["idProduto"] . '" data-toggle="modal" data-target="#entradaModal' . $rows_consultaProduto["idProduto"] . '"><i class="fas fa-cart-plus"></i></a> 
     <a class="btn btn-primary" title="Editar Produto" href="DadosProduto.php?idProduto=' . $rows_consultaProduto["idProduto"] .  '"> <i class="fas fa-edit"></i></a>
@@ -193,15 +196,15 @@ while ($rows_consultaProduto = mysqli_fetch_assoc($empRecords)) {
 </script>
        
 ';
-    $data[] = array(
-        "descricaoProduto" => $rows_consultaProduto['descricaoProduto'],
-        "quantidadeProduto" => $rows_consultaProduto['quantidadeProduto'],
-        "quantidadeMin" => $rows_consultaProduto['quantidadeMin'],
-        "nomeLocal" => $rows_consultaProduto['nomeLocal'],
-        "acoes" => $acoes,
-    );
+        $data[] = array(
+            "descricaoProduto" => $rows_consultaProduto['descricaoProduto'],
+            "quantidadeProduto" => $rows_consultaProduto['quantidadeProduto'],
+            "quantidadeMin" => $rows_consultaProduto['quantidadeMin'],
+            "nomeLocal" => $rows_consultaProduto['nomeLocal'],
+            "acoes" => $acoes,
+        );
+    }
 }
-
 
 
 ## Response
