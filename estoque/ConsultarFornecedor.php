@@ -13,7 +13,7 @@ $resultado_consultaFornecedor = mysqli_query($con, $result_consultaFornecedor);
  <div class="card shadow mb-4">
  
             <div class="card-header py-3">
-            <center>  <h3 class="m-0 font-weight-bold text-primary">Consultar Funcionário</h3><center>
+            <center>  <h3 class="m-0 font-weight-bold text-primary">Consultar Fornecedor</h3><center>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -42,7 +42,8 @@ $resultado_consultaFornecedor = mysqli_query($con, $result_consultaFornecedor);
 <td>
 <?php 
 if($_SESSION['idLocal'] == 0){
-echo "<a class='btn btn-primary' href='ConsultarFornecedor.php?idFornecedor=".$rows_consultaFornecedor['idFornecedor'] ."' data-toggle='modal' data-target='#FornecedorModal".$rows_consultaFornecedor['idFornecedor']."'>" ?>Alterar<?php echo "</a>"; } ?>
+echo "<a class='btn btn-primary' href='ConsultarFornecedor.php?idFornecedor=".$rows_consultaFornecedor['idFornecedor'] ."' data-toggle='modal' data-target='#FornecedorModal".$rows_consultaFornecedor['idFornecedor']."'>" ?>Alterar<?php echo "</a>"; 
+echo "<a class='btn btn-primary' href='RelatorioDetalhadadoFornecedor.php?idFornecedor=".$rows_consultaFornecedor['idFornecedor'] ."'>" ?>Rela Detalhado<?php echo "</a>"; } ?>
     <?php  echo "<a class='btn btn-danger' href='ExcluirFornecedor.php?idFornecedor=" .$rows_consultaFornecedor['idFornecedor']. "'onclick=\"return confirm('Tem certeza que deseja deletar esse funcionário?');\"> Excluir</a>";  ?>
    
    

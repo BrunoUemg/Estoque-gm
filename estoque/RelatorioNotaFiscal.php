@@ -15,6 +15,7 @@ if (isset($_POST['dataInicio'])) {
 
   $result_FiscalPeriodo = "SELECT N.numeroNota, N.quantidade, N.dataEntrada, P.descricaoProduto, L.nomeLocal 
     FROM notafiscal N INNER JOIN produto P ON N.idProduto = P.idProduto INNER JOIN local L ON L.idLocal = P.idLocal
+    INNER JOIN cidade C ON C.idCidade = L.idCidade
     where N.dataEntrada >= '$dataInicio' and N.dataEntrada <= '$dataFinal' and P.idLocal = '$idLocal'  ";
   $resultado_Fiscal = mysqli_query($con, $result_FiscalPeriodo);
 }
@@ -50,12 +51,12 @@ $resultado_local = mysqli_query($con, $result_local);
           <h3 class="m-0 font-weight-bold text-primary">Relatório de Nota Fiscal</h3>
         </center>
         <form action="" method="POST" onsubmit="return(verifica())" class="form-horizontal form-label-left">
-        <?php
-            $data_incioInp = mktime(0, 0, 0, date('m'), 1, date('Y'));
+          <?php
+          $data_incioInp = mktime(0, 0, 0, date('m'), 1, date('Y'));
 
-            $data_incioInpF = date('Y-m-d', $data_incioInp);
+          $data_incioInpF = date('Y-m-d', $data_incioInp);
 
-            ?>
+          ?>
           <div class="item form-group">
             <h5>Filtro por período </h5>
             <label class="control-label col-md-6 col-sm-3 col-xs-12" for="nome">Data início
@@ -109,6 +110,7 @@ $resultado_local = mysqli_query($con, $result_local);
                 <tr>
                   <th>Número</th>
                   <th>Quantidade Entrada</th>
+
                   <th>Produto</th>
                   <th>Data Entrada</th>
                 </tr>
@@ -128,6 +130,7 @@ $resultado_local = mysqli_query($con, $result_local);
                     <tr>
                       <td><?php echo $rows_consultaProduto['numeroNota']; ?></td>
                       <td><?php echo $rows_consultaProduto['quantidade']; ?></td>
+
                       <td><?php echo $rows_consultaProduto['descricaoProduto']; ?></td>
                       <td><?php $dataBanco = $rows_consultaProduto['dataEntrada'];
                           $dataBr = date("d/m/Y", strtotime($dataBanco));
@@ -154,6 +157,7 @@ $resultado_local = mysqli_query($con, $result_local);
             <tr>
               <th>Número</th>
               <th>Quantidade Entrada</th>
+              <th>Cidade</th>
               <th>Produto</th>
               <th>Local</th>
               <th>Data Entrada</th>
@@ -174,6 +178,7 @@ $resultado_local = mysqli_query($con, $result_local);
                 <tr>
                   <td><?php echo $rows_consultaProduto['numeroNota']; ?></td>
                   <td><?php echo $rows_consultaProduto['quantidade']; ?></td>
+                  <td><?php echo $rows_consultaProduto['nomeCidade']; ?></td>
                   <td><?php echo $rows_consultaProduto['descricaoProduto']; ?></td>
                   <td><?php echo $rows_consultaProduto['nomeLocal']; ?></td>
                   <td><?php $dataBanco = $rows_consultaProduto['dataEntrada'];
