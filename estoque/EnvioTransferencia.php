@@ -27,14 +27,15 @@ foreach($_SESSION['transferencia'] as $transferencia)
     $idProduto = $transferencia['idProduto'];
     $idLocal_origem = $transferencia['idLocal'];
     $quantidade = $transferencia['quantidade'];
+    $nf_especifica = $transferencia['comprovanteFiscal'];
     if($idLocal_destino != $idLocal_origem){
-    $con->query("INSERT INTO itens_transferencia (idProduto, idTransferencia, idLocal_origem, quantidade)VALUES('$idProduto',
-    '$idTransferencia','$idLocal_origem', '$quantidade')");
+    $con->query("INSERT INTO itens_transferencia (idProduto, idTransferencia, idLocal_origem, quantidade, nf_especifica)VALUES('$idProduto',
+    '$idTransferencia','$idLocal_origem', '$quantidade', '$nf_especifica')");
     }
     unset($_SESSION['transferencia'][$idProduto]);
 }
 
 $con->query("INSERT INTO historico_transferencia (data, hora, idTransferencia, acao, idUsuario)VALUES('$data','$hora', '$idTransferencia', 'Encaminhou a transferência','$idUsuario')");
 
-echo "<script>alert('Transferência realizada com sucesso!');window.location='Carrinho.php'</script>";
+echo "<script>alert('Transferência realizada com sucesso!');window.location='ConsultarProduto.php'</script>";
 exit();

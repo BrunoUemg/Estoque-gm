@@ -26,8 +26,19 @@ if (isset($_POST['idProduto'])) {
     $_SESSION['transferencia'][$idProduto]['quantidadeMax'] = $quantidadeMax;
     $_SESSION['transferencia'][$idProduto]['idLocal'] = $idLocal;
 
+    if (!empty($_FILES['comprovanteFiscal']['name'])) {
+        $extensao1 = strtolower(substr($_FILES['comprovanteFiscal']['name'], -4));
+        $novo_nome1 = uniqid() . $extensao1; //define o nome do arquivo
+        $diretorio = "../nota_fiscal/";
+        move_uploaded_file($_FILES['comprovanteFiscal']['tmp_name'], $diretorio . $novo_nome1);
+        $_SESSION['transferencia'][$idProduto]['comprovanteFiscal'] = $novo_nome1;
+    }
 
-    echo "<script>window.location='ConsultarProduto.php'</script>";
+    if (isset($_POST['alterarTransferencia'])) {
+        echo "<script>window.location='FinalizarTransferencia.php'</script>";
+    } else {
+        echo "<script>window.location='ConsultarProduto.php'</script>";
+    }
 }
 
 ?>
@@ -55,52 +66,70 @@ if (isset($_POST['idProduto'])) {
                         </thead>
                         <tbody>
                             <?php
+
                             if (isset($_SESSION['transferencia'])) {
                                 foreach ($_SESSION['transferencia'] as $lista => $value) {
                                     $row_last_nf_produto = mysqli_fetch_array(mysqli_query($con, "SELECT * FROM notafiscal where idProduto = '$value[idProduto]' order by idNotaFiscal desc limit 1"));
                                     $valorTotal = $value['quantidade'] * $row_last_nf_produto['valor'];
+
+
                                     $idProduto = $value['idProduto'];
+                                    if (in_array("$idProduto", $_SESSION['transferencia'][$lista])) {
+                                        $nfAlterada = $value['comprovanteFiscal'];
+                                    }
+                                    $unicoId = uniqid();
                             ?>
                                     <tr>
                                         <td> <?php echo $value['descricao'];  ?> </td>
                                         <td> <?php echo $value['quantidade']; ?> </td>
                                         <td> <?php echo "R$" . $row_last_nf_produto['valor']; ?> </td>
                                         <td> <?php echo "R$" . $valorTotal; ?> </td>
-                                        <td> <a href="../nota_fiscal/<?php echo $row_last_nf_produto['comprovanteFiscal']; ?>" title="Visualizar Comprovante" target="_blank" rel="noopener noreferrer"><?php echo $row_last_nf_produto['NumeroNota'] ?></a> </td>
+                                        <td>
+                                            <?php
+                                            if ($nfAlterada) { ?>
+                                                <a href="../nota_fiscal/<?php echo $nfAlterada; ?>" title="Visualizar Comprovante" target="_blank" rel="noopener noreferrer">NF alterada</a>
+                                            <?php } else { ?>
+                                                <a href="../nota_fiscal/<?php echo $row_last_nf_produto['comprovanteFiscal']; ?>" title="Visualizar Comprovante" target="_blank" rel="noopener noreferrer"><?php echo $row_last_nf_produto['NumeroNota'] ?></a>
+                                            <?php  } ?>
+
+                                        </td>
                                         <td>
                                             <a class='btn btn-danger' href="RemoveTransferencia.php?idProduto=<?php echo $idProduto ?>" onclick="return confirm('Tem certeza que deseja remover esse item do carrrinho?')"> <i class='fas fa-trash-alt'></i>
-                                                <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#carrinhoModal"><i class='fas fa-cart-arrow-down'></i>
-                                                    <!-- Modal-->
-                                                    <div class="modal fade" id="carrinhoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title text-dark" id="exampleModalLabel">Alterar Quantidade</h5>
-                                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">×</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body justify-content-start align-items-start">
-                                                                    <form action="FinalizarTransferencia.php" method="POST">
-                                                                        <input type="text" hidden name="idProduto" class="form-control" value="<?php echo $idProduto; ?>">
-                                                                        <label class="text-dark text-left"for="descricao">Descrição do Produto</label>
-                                                                        <input type="text" class="form-control" disabled value="<?php echo $value['descricao']; ?>">
-                                                                        <input type="hidden" class="form-control" name="descricao" value="<?php echo $value['descricao']; ?>">
-                                                                        <input type="hidden" class="form-control" name="quantidadeMax" value="<?php echo $value['quantidadeMax']; ?>">
-                                                                        <input type="hidden" class="form-control" name="idLocal" value="<?php echo $value['idLocal']; ?>">
-                                                                        <label class="text-dark text-left" for="quantidade">Quantidade</label>
-                                                                        <input type="number" class="form-control" name="quantidade" min="1" max="<?php echo $value['quantidadeMax']; ?>">
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
-                                                                    <input type="submit" class="btn btn-primary" value="Alterar">
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#carrinhoModal<?php echo $unicoId ?>"><i class='fas fa-cart-arrow-down'></i>
                                         </td>
                                     </tr>
+
+                                    <!-- Modal-->
+                                    <div class="modal fade" id="carrinhoModal<?php echo $unicoId ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title text-dark" id="exampleModalLabel">Alterar Quantidade</h5>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body justify-content-start align-items-start">
+                                                    <form action="FinalizarTransferencia.php" method="POST" enctype="multipart/form-data">
+                                                        <input type="text" hidden name="idProduto" class="form-control" value="<?php echo $idProduto; ?>">
+                                                        <label class="text-dark text-left" for="descricao">Descrição do Produto</label>
+                                                        <input type="text" class="form-control" disabled value="<?php echo $value['descricao']; ?>">
+                                                        <input type="hidden" class="form-control" name="descricao" value="<?php echo $value['descricao']; ?>">
+                                                        <input type="hidden" class="form-control" name="quantidadeMax" value="<?php echo $value['quantidadeMax']; ?>">
+                                                        <input type="hidden" class="form-control" name="idLocal" value="<?php echo $value['idLocal']; ?>">
+                                                        <label class="text-dark text-left" for="quantidade">Quantidade</label>
+                                                        <input type="number" class="form-control" name="quantidade" min="1" value="<?php echo $value['quantidade'] ?>" max="<?php echo $value['quantidadeMax']; ?>">
+                                                        <label for="">Alterar NF</label>
+                                                        <input type="file" name="comprovanteFiscal" class="form-control">
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
+                                                            <input type="submit" class="btn btn-primary" name="alterarTransferencia" value="Alterar">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                             <?php  }
                             }
                             ?>

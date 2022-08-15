@@ -115,6 +115,7 @@ $select_local = mysqli_query($con, "SELECT * FROM local order by nomeLocal asc")
                                         <td>
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#visualizarTransferencia<?php echo $rows_consultaProduto['idProduto'] ?>">Visualizar Itens</button>
                                             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#visualizarHistorico<?php echo $rows_consultaProduto['idProduto'] ?>">Visualizar Histórico</button>
+                                            <a href="TermoTransferencia.php?idTransferencia=<?php echo $rows_consultaProduto['idTransferencia'] ?>" class="btn btn-primary" target="_blank" title="Relatório de termos e nfs" rel="noopener noreferrer">Rela Termo</a>
                                         </td>
                                     </tr>
 
