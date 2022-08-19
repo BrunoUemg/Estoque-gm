@@ -19,6 +19,7 @@ if (isset($_POST['idProduto'])) {
     $quantidadeMax = $_POST["quantidadeMax"];
     $idLocal = $_POST["idLocal"];
 
+      
 
     $_SESSION['transferencia'][$idProduto]['idProduto'] = $idProduto;
     $_SESSION['transferencia'][$idProduto]['descricao'] = $descricao;
@@ -69,11 +70,21 @@ if (isset($_POST['idProduto'])) {
 
                             if (isset($_SESSION['transferencia'])) {
                                 foreach ($_SESSION['transferencia'] as $lista => $value) {
+
+
                                     $row_last_nf_produto = mysqli_fetch_array(mysqli_query($con, "SELECT * FROM notafiscal where idProduto = '$value[idProduto]' order by idNotaFiscal desc limit 1"));
-                                    $valorTotal = $value['quantidade'] * $row_last_nf_produto['valor'];
+
+
+
+
+                                    $valorUnitario = $row_last_nf_produto['valor'];
+
+                                    $valorTotal = $value['quantidade'] * $valorUnitario;
 
 
                                     $idProduto = $value['idProduto'];
+                                    $_SESSION['transferencia'][$idProduto]['valorUnitario'] = $valorUnitario;
+                                    
                                     if (in_array("$idProduto", $_SESSION['transferencia'][$lista])) {
                                         $nfAlterada = $value['comprovanteFiscal'];
                                     }
@@ -82,7 +93,7 @@ if (isset($_POST['idProduto'])) {
                                     <tr>
                                         <td> <?php echo $value['descricao'];  ?> </td>
                                         <td> <?php echo $value['quantidade']; ?> </td>
-                                        <td> <?php echo "R$" . $row_last_nf_produto['valor']; ?> </td>
+                                        <td> <?php echo "R$" .  $valorUnitario; ?> </td>
                                         <td> <?php echo "R$" . $valorTotal; ?> </td>
                                         <td>
                                             <?php
@@ -121,6 +132,7 @@ if (isset($_POST['idProduto'])) {
                                                         <input type="number" class="form-control" name="quantidade" min="1" value="<?php echo $value['quantidade'] ?>" max="<?php echo $value['quantidadeMax']; ?>">
                                                         <label for="">Alterar NF</label>
                                                         <input type="file" name="comprovanteFiscal" class="form-control">
+                                                     
                                                         <div class="modal-footer">
                                                             <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
                                                             <input type="submit" class="btn btn-primary" name="alterarTransferencia" value="Alterar">

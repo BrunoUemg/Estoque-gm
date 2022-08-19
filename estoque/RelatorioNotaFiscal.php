@@ -13,7 +13,7 @@ if (isset($_POST['dataInicio'])) {
   //Adm
   $idLocal = $_POST['idLocal'];
 
-  $result_FiscalPeriodo = "SELECT N.numeroNota, N.quantidade, N.dataEntrada, P.descricaoProduto, L.nomeLocal 
+  $result_FiscalPeriodo = "SELECT N.numeroNota, N.quantidade, N.dataEntrada, P.descricaoProduto, L.nomeLocal, L.idLocal 
     FROM notafiscal N INNER JOIN produto P ON N.idProduto = P.idProduto INNER JOIN local L ON L.idLocal = P.idLocal
     INNER JOIN cidade C ON C.idCidade = L.idCidade
     where N.dataEntrada >= '$dataInicio' and N.dataEntrada <= '$dataFinal' and P.idLocal = '$idLocal'  ";

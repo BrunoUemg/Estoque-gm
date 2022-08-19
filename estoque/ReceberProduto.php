@@ -57,6 +57,7 @@ date_default_timezone_set('America/Sao_Paulo');
                             <td>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#visualizarTransferencia<?php echo $rows_consultaProduto['idProduto'] ?>">Visualizar</button>
                                 <a href="TermoTransferencia.php?idTransferencia=<?php echo $rows_consultaProduto['idTransferencia'] ?>" class="btn btn-primary" target="_blank" title="Relatório de termos e nfs" rel="noopener noreferrer">Rela Termo</a>
+                                <a href="EditarItensTransferencia.php?idTransferencia=<?php echo $rows_consultaProduto['idTransferencia'] ?>" class="btn btn-primary" title="Editar itens da transferência" rel="noopener noreferrer">Editar valor itens</a>
                             </td>
                         </tr>
                         <?php
