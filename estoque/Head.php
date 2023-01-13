@@ -148,6 +148,9 @@ $linha2 = $res->fetch_assoc();
               <?php }
               if ($linha2['relaRequisicao'] == 1) { ?>
                 <a class="collapse-item" href="RelatorioRequisicao.php">Requisição</a>
+              <?php } 
+              if ($linha2['relatorioTransferencia'] == 1) { ?>
+                <a class="collapse-item" href="RelatorioTransferencia.php">Transferência</a>
               <?php } ?>
             </div>
           </div>
