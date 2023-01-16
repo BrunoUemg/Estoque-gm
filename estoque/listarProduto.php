@@ -94,6 +94,7 @@ while ($rows_consultaProduto = mysqli_fetch_assoc($empRecords)) {
                             <input type="hidden" class="form-control" name="descricao" value=" ' . $rows_consultaProduto["descricaoProduto"] . ' ">
                             <input type="hidden" class="form-control" name="quantidadeMax" value=" ' . $rows_consultaProduto["quantidadeProduto"] . ' ">
                             <input type="hidden" class="form-control" name="idLocal" value=" ' . $rows_consultaProduto["idLocal"] . '">
+                            <input type="hidden" class="form-control" name="nomeLocal" value=" ' . $rows_consultaProduto["nomeLocal"] . '">
                             <label>Quantidade Maxíma</label>
                             <input type="text" disabled class="form-control" name="quantidadeproduto" value=" ' . $rows_consultaProduto["quantidadeProduto"] . ' ">
                             <label>Quantidade</label>

@@ -22,6 +22,7 @@ if (isset($_POST['idProduto']))
 	$quantidade= $_POST["quantidade"];
 	$quantidadeMax= $_POST["quantidadeMax"];
 	$idLocal= $_POST["idLocal"];
+	$nomeLocal= $_POST["nomeLocal"];
 
 
 	$_SESSION['carrinho'][$idProduto]['idProduto']= $idProduto;
@@ -29,6 +30,7 @@ if (isset($_POST['idProduto']))
 	$_SESSION['carrinho'][$idProduto]['quantidade']= $quantidade;
   $_SESSION['carrinho'][$idProduto]['quantidadeMax']= $quantidadeMax;
   $_SESSION['carrinho'][$idProduto]['idLocal']= $idLocal;
+  $_SESSION['carrinho'][$idProduto]['nomeLocal']= $nomeLocal;
 
 
   echo "<script>window.location='ConsultarProduto.php'</script>";
@@ -52,6 +54,7 @@ if (isset($_POST['idProduto']))
 					<tr>
 						<th>Produto</th>
 						<th>Quantidade</th>
+						<th>Local</th>
 						<th>Ação</th>
 
 					</tr>				
@@ -65,6 +68,7 @@ foreach($_SESSION['carrinho'] as $lista) {
 					<tr>
 						<td> <?php echo $lista['descricao'];  ?> </td>
 						<td> <?php echo $lista['quantidade']; ?> </td>
+						<td> <?php echo $lista['nomeLocal']; ?> </td>
 						<td>
 						<?php  echo "<a  class='btn btn-danger' href='Remove.php?idProduto=" .$lista['idProduto']. "' onclick=\"return confirm('Tem certeza que deseja remover esse item do carrrinho?');\">"?> <i class='fas fa-trash-alt'></i><?php echo "</a>";  ?>
 						<?php echo "<a class='btn btn-warning' href='Carrinho.php?idProduto=".$lista['idProduto'] ."' data-toggle='modal' data-target='#carrinhoModal".$lista['idProduto']."'>" ?><i class='fas fa-cart-arrow-down'></i><?php echo "</a>"; ?>
