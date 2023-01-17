@@ -42,7 +42,7 @@ $resultado_consultaFuncionario = mysqli_query($con, $result_consultaFuncionario)
                 
 	
 <td>
-     
+    <?php  echo "<a  class='btn btn-primary' title='Resetar ' href='../dao/resetar_senha.php?idUsuario=" . $rows_consultaFuncionario['idUsuario'] . "&userAcesso=".$rows_consultaFuncionario['userAcesso']."' onclick=\"return confirm('Tem certeza que deseja reseta a senha?');\">" ?>Resetar<?php echo "</a>"; ?>
     <?php  echo "<a class='btn btn-danger' href='ExcluirFuncionario.php?idUsuario=" .$rows_consultaFuncionario['idUsuario']. "'onclick=\"return confirm('Tem certeza que deseja desligar esse funcionário?');\"> Desligar</a>";  ?>
     <?php  echo "<a class='btn btn-secondary' href='Historico.php?idUsuario=" .$rows_consultaFuncionario['idUsuario']. "'> Histórico</a>";  ?>
     <?php  echo "<a class='btn btn-secondary' href='editarFuncaoFuncionario.php?idUsuario=" .$rows_consultaFuncionario['idUsuario']. "'> Função</a>";  ?>
