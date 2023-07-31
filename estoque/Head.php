@@ -106,6 +106,9 @@ $linha2 = $res->fetch_assoc();
               if ($linha2['consulProduto'] == 1) { ?>
                 <a class="collapse-item" href="ConsultarProduto.php">Consultar</a>
               <?php }
+              if ($linha2['consulProdutoDesativado'] == 1) { ?>
+                <a class="collapse-item" href="ConsultarProdutoDesativado.php">Consultar Desativado</a>
+              <?php }
               if ($linha2['receberTransferencia'] == 1) { ?>
                 <a class="collapse-item" href="ReceberProduto.php">Receber Transferência</a>
               <?php } ?>
@@ -213,6 +216,7 @@ $linha2 = $res->fetch_assoc();
   <div class="bg-white py-2 collapse-inner rounded">
     <a class="collapse-item" href="CadastrarProduto.php">Cadastrar</a>
     <a class="collapse-item" href="ConsultarProduto.php">Consultar</a>
+    <a class="collapse-item" href="ConsultarProdutoDesativado.php">Consultar Desativado</a>
     <a class="collapse-item" href="ReceberProduto.php">Receber Transferência</a>
     <a class="collapse-item" href="EntradasPendentes.php">Entradas Pendentes</a>
     <a class="collapse-item" href="SaidasPendentes.php">Saídas Pendentes</a>

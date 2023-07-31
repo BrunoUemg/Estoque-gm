@@ -8,12 +8,12 @@ include_once("Head.php");
 
 $resultado_consultaProduto = mysqli_query($con, "SELECT P.idProduto,
 P.descricaoProduto, 
-P.quantidadeProduto ,
+P.quantidadeProduto,
 P.quantidadeMin,
 P.idLocal,
 L.nomeLocal 
 FROM produto P, local L 
-WHERE P.idLocal = L.idLocal and status = 1  ");
+WHERE P.idLocal = L.idLocal and status = 0;");
 
 
 
@@ -44,7 +44,7 @@ WHERE P.idLocal = L.idLocal and status = 1  ");
     <div class="card shadow mb-4">
       <div class="card-header py-3">
         <center>
-          <h3 class="m-0 font-weight-bold text-primary">Consultar Produtos</h3>
+          <h3 class="m-0 font-weight-bold text-primary">Consultar Produtos Desativados</h3>
         </center>
       </div>
       <div class="card-body">
@@ -121,7 +121,7 @@ WHERE P.idLocal = L.idLocal and status = 1  ");
       'serverSide': true,
       'serverMethod': 'post',
       'ajax': {
-        'url': 'listarProduto.php'
+        'url': 'ListarProdutoDesativado.php'
       },
       'columns': [{
           data: 'descricaoProduto'
