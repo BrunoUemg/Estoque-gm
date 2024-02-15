@@ -275,6 +275,9 @@ $select_local = mysqli_query($con, "SELECT * FROM local order by nomeLocal asc")
                         altkey: true
                     }
                 },
+                
+                'excel',
+                
                 'pageLength'
 
             ],

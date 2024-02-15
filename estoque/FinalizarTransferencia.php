@@ -38,7 +38,7 @@ if (isset($_POST['idProduto'])) {
     if (isset($_POST['alterarTransferencia'])) {
         echo "<script>window.location='FinalizarTransferencia.php'</script>";
     } else {
-        echo "<script>window.location='ConsultarProduto.php'</script>";
+       /* echo "<script>window.location='ConsultarProduto.php'</script>";*/
     }
 }
 

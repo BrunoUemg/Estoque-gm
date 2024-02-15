@@ -73,7 +73,7 @@ while ($rows_consultaProduto = mysqli_fetch_assoc($empRecords)) {
     <a class="btn btn-warning" title="Adicionar Produto no Carrinho" href="ConsultarProduto.php?idProduto=' . $rows_consultaProduto["idProduto"] . '" data-toggle="modal" data-target="#carrinhoModal' . $rows_consultaProduto["idProduto"] . '"><i class="fas fa-cart-arrow-down"></i></a>
     ' . $excluir . '
     ' . $modal . '
-    <a class="btn btn-secondary" title="Informação do produto" href="RelatorioProdutoUnico.php?idProduto=' . $rows_consultaProduto["idProduto"] .  '"><i class="fas fa-file-pdf"></i></a>
+    <a class="btn btn-secondary" title="Relatório do produto" href="RelatorioProdutoUnico.php?idProduto=' . $rows_consultaProduto["idProduto"] .  '"><i class="fa-solid fa-file-arrow-down"></i></a>
        <a class="btn btn-dark" title="Transferir" href="ConsultarProduto.php?idProduto=' . $rows_consultaProduto["idProduto"] . '" data-toggle="modal" data-target="#carrinhoTransferencia' . $rows_consultaProduto["idProduto"] . '"><i class="fa-solid fa-arrow-right-arrow-left"></i></a>
        
        <!-- Modal-->

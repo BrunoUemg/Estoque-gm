@@ -23,10 +23,10 @@ solicitante,idUsuario, situacao, idLocal_destino)VALUES('$data', '$hora', 0,'$ju
 $idTransferencia = mysqli_insert_id($con);
 
 
-use Dompdf\Dompdf;
+use dompdf\dompdf;
 
 require_once 'dompdf/autoload.inc.php';
-$dompdf = new Dompdf();
+$dompdf = new dompdf();
 $dompdf->loadHtml(' 
 <div  style="position:absolute; bottom: 0px; right:5px;">  Página 1 de 1 </div>
 

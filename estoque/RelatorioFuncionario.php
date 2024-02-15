@@ -121,6 +121,9 @@ $resultado_consultaFuncionario = mysqli_query($con, $result_consultaFuncionario)
                 altkey: true
             }
         },
+        
+        'excel',
+        
         'pageLength'
         
         ],

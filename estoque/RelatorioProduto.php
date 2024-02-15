@@ -125,14 +125,13 @@ $resultado_consultaProduto = mysqli_query($con, $result_consultaProduto);
                 altkey: true
             }
         },
+        
+        'excel',
+        
         'pageLength'
         
         ],
         
-        lengthMenu: [
-            [ 10, 25, 50, -1 ],
-            [ '10 linhas', '25 linhas', '50 linhas', 'Mostrar tudo' ]
-        ],
        
         
         "language": {
@@ -187,7 +186,7 @@ $resultado_consultaProduto = mysqli_query($con, $result_consultaProduto);
             "_": "Mostrar %d registros"
         },
         "pdf": "PDF",
-        "print": "Imprimir"
+        "print": "Imprimir",
     },
     "autoFill": {
         "cancel": "Cancelar",

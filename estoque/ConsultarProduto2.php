@@ -3,151 +3,184 @@ include_once("../dao/conexao.php");
 
 include_once("Head.php");
 
-$idProduto = $_GET['idProduto'];
 
-$result_consultaProduto="SELECT * FROM notafiscal N INNER JOIN fornecedor F 
-ON F.idFornecedor = N.idFornecedor INNER  JOIN produto P ON P.idProduto = N.idProduto 
-INNER JOIN local L ON L.idLocal = P.idLocal INNER JOIN usuario U ON U.idUsuario = N.idUsuario  where N.idProduto = '$idProduto' and N.status = 1  ";
-$resultado_consultaProduto = mysqli_query($con, $result_consultaProduto);
+
+
+$resultado_consultaProduto = mysqli_query($con, "SELECT P.idProduto,
+P.descricaoProduto, 
+P.quantidadeProduto ,
+P.quantidadeMin,
+P.idLocal,
+L.nomeLocal 
+FROM produto P, local L 
+WHERE P.idLocal = L.idLocal and status = 1  ");
+
+
+
+// $result_ProdutoLimite = "SELECT idProduto,
+// descricaoProduto, 
+// quantidadeProduto,
+// idLocal,
+// quantidadeMin
+// FROM produto  
+// WHERE quantidadeProduto <= quantidadeMin and tipoEstoque = 0 and status = 1 ";
+// $resultado_ProdutoLimite = mysqli_query($con, $result_ProdutoLimite);
 
 
 
 
 ?>
 
-<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
 
   <div class="container-fluid">
 
-<!-- DataTales Example -->
-<div class="card shadow mb-4">
-  <div class="card-header py-3">
-    <center><h3 class="m-0 font-weight-bold text-primary">Relatório de Produtos</h3></center>
-  </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered" id="lista-produto" width="100%" cellspacing="0">
-        <thead>
-          <tr>
-            <th>Descrição</th>
-            <th>Quantidade</th>
-            <th>Local</th>
-            <th>Data entrada</th>
-            <th>Fornecedor</th>
-            <th>Valor</th>
-            <th>Usuário</th>
-          </tr>
-        </thead>
-        
-        <tbody>
-        <?php 
-       while($rows_consultaProduto = mysqli_fetch_assoc($resultado_consultaProduto)){
-        $select_localusu = mysqli_query($con,"SELECT * FROM local_usuario where idUsuario = '$_SESSION[idUsuario]' and idLocal = '$rows_local[idLocal]'");
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <center>
+          <h3 class="m-0 font-weight-bold text-primary">Consultar Produtos</h3>
+        </center>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="lista-produto" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Qntd Mínima</th>
+                <th>Local</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
 
-        if(mysqli_num_rows($select_localusu) > 0 || $_SESSION['idLocal'] == null){ 
-        ?>
-          <tr>
-          <td><?php echo $rows_consultaProduto['descricaoProduto'];?></td>
-          <td><?php echo $rows_consultaProduto['quantidade'];?></td>
-          <td><?php echo $rows_consultaProduto['nomeLocal'];?></td>
-          <td><?php echo date("d/m/Y", strtotime($rows_consultaProduto['dataEntrada']));?></td>
-          <td><?php echo $rows_consultaProduto['nomeFantasia'];?></td>
-          <td><?php echo $rows_consultaProduto['valor'];?></td>
-          <td><?php echo $rows_consultaProduto['nomeUsuario'];?></td>
-          </tr>
-          <?php } }
-       
-         ?> 
-        </tbody>
-      </table>
+            <tbody>
+              <tr>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+
   </div>
-</div>
-<input type="button" name="cancelar" class="btn btn-primary" onClick="window.location.href='ConsultarProduto.php'" value="Voltar">
-</div>
-</div>
 
   <!-- End of Main Content -->
-  </div>
-      </div>        
+</div>
+</div>
 
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; NUPSI 2019</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
-
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+      <span>Copyright &copy; NUPSI 2019</span>
     </div>
-    <!-- End of Content Wrapper -->
-
   </div>
-  <!-- End of Page Wrapper -->
+</footer>
+<!-- End of Footer -->
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
+</div>
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
 
 
-  <!-- Bootstrap core JavaScript-->
-    <!-- Subitens funcionar-->
-  <script src="../vendor/jquery/jquery.min.js"></script>
-  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap core JavaScript-->
+<!-- Subitens funcionar-->
+<script src="../vendor/jquery/jquery.min.js"></script>
+<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-  <script src="../js/sb-admin-2.min.js"></script>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.flash.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.html5.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.print.min.js"></script>
+<!-- Custom scripts for all pages-->
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+<!-- DataTables Buttons -->
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+
 
 <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"></script>
 
 <!-- Page level plugins -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"> 
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
+
+
 
 
 <script type="text/javascript">
-        $(document).ready(function() {
-    $('#lista-produto').DataTable( {
-        dom: 'Bfrtip',
-        buttons: [
-        'pdf',{
-            extend: 'print',
-            text: 'Imprimir',
-            key: {
-                key: 'p',
-                altkey: true
-            }
+  $(document).ready(function() {
+    $('#lista-produto').DataTable({
+    dom: 'lBfrtip',
+         buttons: [
+    {         
+    extend: 'pdf'
+        
+    },
+    {
+        extend: 'print',
+        columns: [0, 1, 2, 3],
+        key: {
+            key: 'p',
+            altkey: true
+        }
+    },
+     {
+        extend: 'excel',
+        columns: [0, 1, 2, 3]
+    }
+],
+
+        
+        'processing': true,
+        'serverSide': true,
+        'serverMethod': 'post',
+        'ajax': {
+            'url': 'listarProduto.php'
         },
         
-        'excel',
-        
-        'pageLength'
-        
+        'columns': [
+            {
+                data: 'descricaoProduto'
+            },
+            {
+                data: 'quantidadeProduto'
+            },
+            {
+                data: 'quantidadeMin'
+            },
+            {
+                data: 'nomeLocal'
+            },
+            {
+                data: 'acoes'
+            }
         ],
         
-        lengthMenu: [
-            [ 10, 25, 50, -1 ],
-            [ '10 linhas', '25 linhas', '50 linhas', 'Mostrar tudo' ]
-        ],
-       
-        
-        "language": {
+
+      "language": {
           "emptyTable": "Nenhum registro encontrado",
     "info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
     "infoEmpty": "Mostrando 0 até 0 de 0 registros",
@@ -192,14 +225,13 @@ $resultado_consultaProduto = mysqli_query($con, $result_consultaProduto);
         "copy": "Copiar",
         "copyKeys": "Pressione ctrl ou u2318 + C para copiar os dados da tabela para a área de transferência do sistema. Para cancelar, clique nesta mensagem ou pressione Esc..",
         "copyTitle": "Copiar para a Área de Transferência",
-        "csv": "CSV",
         "excel": "Excel",
         "pageLength": {
             "-1": "Mostrar todos os registros",
             "_": "Mostrar %d registros"
         },
         "pdf": "PDF",
-        "print": "Imprimir"
+        "print": "Imprimir",
     },
     "autoFill": {
         "cancel": "Cancelar",
@@ -349,14 +381,67 @@ $resultado_consultaProduto = mysqli_query($con, $result_consultaProduto);
         }
     },
     "decimal": ","
-}
-    } );
-} );
+},
+      "buttons": {
+        "copySuccess": {
+            "1": "Uma linha copiada com sucesso",
+            "_": "%d linhas copiadas com sucesso"
+        },
+        "collection": "Coleção  <span class=\"ui-button-icon-primary ui-icon ui-icon-triangle-1-s\"><\/span>",
+        "colvis": "Visibilidade da Coluna",
+        "colvisRestore": "Restaurar Visibilidade",
+        "copyKeys": "Pressione ctrl ou u2318 + C para copiar os dados da tabela para a área de transferência do sistema. Para cancelar, clique nesta mensagem ou pressione Esc..",
+        "copyTitle": "Copiar para a Área de Transferência",
+        "excel": "Excel",
+        "pageLength": {
+            "-1": "Mostrar todos os registros",
+            "_": "Mostrar %d registros"
+        },
+        "pdf": "PDF",
+    },
+    });
+  });
 </script>
-
+<script>
+  function moeda(a, e, r, t) {
+    let n = "",
+      h = j = 0,
+      u = tamanho2 = 0,
+      l = ajd2 = "",
+      o = window.Event ? t.which : t.keyCode;
+    if (13 == o || 8 == o)
+      return !0;
+    if (n = String.fromCharCode(o),
+      -1 == 
+    'pageLength')
+    for (u = a.value.length
+      h = 0; h < u && ("0" == a.value.charAt(h) || a.value.charAt(h) == r); h++)
+    ;
+    for (l = ""; h < u; h++)
+      -
+      1 != "0123456789".indexOf(a.value.charAt(h)) && (l += a.value.charAt(h));
+    if (l += n,
+      0 == (u = l.length) && (a.value = ""),
+      1 == u && (a.value = "0" + r + "0" + l),
+      2 == u && (a.value = "0" + r + l),
+      u > 2) {
+      for (ajd2 = "",
+        j = 0,
+        h = u - 3; h >= 0; h--)
+        3 == j && (ajd2 += e,
+          j = 0),
+        ajd2 += l.charAt(h),
+        j++;
+      for (a.value = "",
+        tamanho2 = ajd2.length,
+        h = tamanho2 - 1; h >= 0; h--)
+        a.value += ajd2.charAt(h);
+      a.value += r + l.substr(u - 2, u)
+    }
+    return !1
+  }
+</script>
 
 </body>
 
 </html>
-
-

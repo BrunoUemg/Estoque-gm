@@ -129,6 +129,9 @@ $resultado_ProdutoLimite = mysqli_query($con, $result_ProdutoLimite);
                 altkey: true
             }
         },
+        
+        'excel',
+        
         'pageLength'
         
         ],
